@@ -9,7 +9,7 @@ package ru.job4j.loop;
 public class Board {
 
     /**
-     * Рисует шазматную доску.
+     * Рисует шахматную доску.
      *
      * @param width ширина доски
      * @param height высота доски
