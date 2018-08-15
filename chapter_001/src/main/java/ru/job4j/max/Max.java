@@ -19,4 +19,17 @@ public class Max {
         return first > second ? first : second;
     }
 
+    /**
+     * Находит большее число из трех.
+     *
+     * @param first Первое число.
+     * @param second Второе число.
+     * @param third Третье число.
+     * @return Максимальное чисо из трех.
+     */
+    public int max(int first, int second, int third) {
+        int temp = this.max(first, second);
+
+        return this.max(temp, third);
+    }
 }
