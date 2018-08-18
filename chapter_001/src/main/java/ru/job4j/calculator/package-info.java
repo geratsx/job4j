@@ -1,7 +1,7 @@
 package ru.job4j.calculator;
 
 /**
- * Package for calculator task.
+ * Package for simple calculator.
  *
  * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
  * @version $Id$

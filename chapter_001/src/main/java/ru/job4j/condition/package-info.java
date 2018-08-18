@@ -1,6 +1,6 @@
 package ru.job4j.condition;
 /**
- * Package for calculator task.
+ * Package for conditions task.
  *
  * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
  * @version $Id$

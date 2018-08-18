@@ -1,6 +1,6 @@
 package ru.job4j.max;
 /**
- * Package for calculator task.
+ * Package for max task.
  *
  * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
  * @version $Id$

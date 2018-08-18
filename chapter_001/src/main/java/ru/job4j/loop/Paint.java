@@ -11,7 +11,7 @@ import java.util.function.BiPredicate;
 public class Paint {
 
     /**
-     * Рисует Пирамиду.
+     * Рисует пирамиду.
      *
      * @param height высота пирамиды
      * @return Пирамида.
