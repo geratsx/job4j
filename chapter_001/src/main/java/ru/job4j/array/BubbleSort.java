@@ -5,7 +5,7 @@ package ru.job4j.array;
  * @version $Id$
  * @since 0.1
  *
- * Пузарьковая сортировка массива.
+ * Пузырьковая сортировка массива.
  *
  */
 public class BubbleSort {
