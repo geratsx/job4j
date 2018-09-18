@@ -15,7 +15,7 @@ public class ArrayDuplicate {
      * @param array Исходный массив.
      * @return Массив без дубликатов.
      */
-    public String[] remove(String[] array){
+    public String[] remove(String[] array) {
         int border = array.length;
         for (int i = 0; i < border; i++) {
             for (int j = i + 1; j < border; j++) {
