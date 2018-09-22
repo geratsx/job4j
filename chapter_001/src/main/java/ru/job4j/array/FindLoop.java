@@ -10,13 +10,13 @@ public class FindLoop {
      * Находит индекс элемента в массиве.
      *
      * @param data Массив значений.
-     * @param el Искомый элемент.
+     * @param elem Искомый элемент.
      * @return Индекс элемента в массиве.
      */
-    public int indexOf(int[] data, int el) {
+    public int indexOf(int[] data, int elem) {
         int rst = -1;
         for (int index = 0; index < data.length; index++) {
-            if (data[index] == el) {
+            if (data[index] == elem) {
                 rst = index;
                 break;
             }

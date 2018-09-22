@@ -18,7 +18,6 @@ public class Triangle {
         this.c = c;
     }
 
-
     /**
      * Метод вычисления полупериметра по длинам сторон.
      *
@@ -46,7 +45,6 @@ public class Triangle {
         double ac = this.a.distanceTo(this.c);
         double bc = this.b.distanceTo(this.c);
         double p = this.period(ab, ac, bc);
-
         if (this.exist(ab, ac, bc)) {
             rsl = Math.sqrt(p * (p - ab) * (p - ac) * (p - bc));
         }
@@ -64,7 +62,6 @@ public class Triangle {
      * @return true если у треугольника сумма любых двух сторон больше третьей и false в противном случае.
      */
     private boolean exist(double ab, double ac, double bc) {
-
         return ab + bc > ac && ab + ac > bc && bc + ac > ab;
     }
 }

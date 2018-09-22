@@ -17,5 +17,4 @@ public class CounterTest {
         int result = counter.add(2, 10);
         assertThat(result, is(30));
     }
-
 }

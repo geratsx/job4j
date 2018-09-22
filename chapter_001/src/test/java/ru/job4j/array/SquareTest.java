@@ -33,7 +33,7 @@ public class SquareTest {
     public void whenBound0ThenEmptyArray() {
         int bound = 0;
         Square square = new Square();
-        int[] rst = square.calculate(0);
+        int[] rst = square.calculate(bound);
         int[] expect = new int[] {};
         assertThat(rst, is(expect));
     }

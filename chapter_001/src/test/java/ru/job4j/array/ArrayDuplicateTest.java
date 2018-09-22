@@ -19,7 +19,6 @@ public class ArrayDuplicateTest {
         String[] input =  {"Привет", "Мир", "Привет", "Супер", "Мир"};
         String[] expect = {"Привет", "Мир", "Супер"};
         String[] result = duplicate.remove(input);
-
         assertThat(result, arrayContainingInAnyOrder(expect));
 
     }
