@@ -1,12 +1,10 @@
 package ru.job4j.tictactoe;
 
-import java.util.function.Predicate;
-
 /**
  * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
  * @version $Id$
  * @since 0.1
- *
+ * <p>
  * Класс Logic3T отвечает за проверку логики.
  */
 
@@ -15,63 +13,107 @@ public class Logic3T {
 
     public Logic3T(Figure3T[][] table) {
         this.table = table;
-     }
+    }
+
 
     /**
-     * Проверяет победу крестиков.
+     * Проверяет победу крестиков
+     *
      * @return True, если крестики победили.
      */
     public boolean isWinnerX() {
-        return this.fillBy(Figure3T::hasMarkX, 0, 0, 1, 0)
-                || this.fillBy(Figure3T::hasMarkX, 0, 1, 1, 0)
-                || this.fillBy(Figure3T::hasMarkX, 0, this.table.length - 1, 1, 0)
-                || this.fillBy(Figure3T::hasMarkX, 0, 0, 0, 1)
-                || this.fillBy(Figure3T::hasMarkX, 1, 0, 0, 1)
-                || this.fillBy(Figure3T::hasMarkX, this.table.length - 1, 0, 0, 1)
-                || this.fillBy(Figure3T::hasMarkX, 0, 0,  1,  1)
-                || this.fillBy(Figure3T::hasMarkX, this.table.length - 1, 0, -1, 1);
+        return isWinDiagonals(true) || isWinHorizontalOrVertical(true);
     }
+
+
     /**
-     * Проверяет победу ноликов.
+     * Проверяет победу ноликов
+     *
      * @return True, если нолики победили.
      */
     public boolean isWinnerO() {
-        return this.fillBy(Figure3T::hasMarkO, 0, 0, 1, 0)
-                || this.fillBy(Figure3T::hasMarkO, 0, 1, 1, 0)
-                || this.fillBy(Figure3T::hasMarkO, 0, this.table.length - 1, 1, 0)
-                || this.fillBy(Figure3T::hasMarkO, 0, 0, 0, 1)
-                || this.fillBy(Figure3T::hasMarkO, 1, 0, 0, 1)
-                || this.fillBy(Figure3T::hasMarkO, this.table.length - 1, 0, 0, 1)
-                || this.fillBy(Figure3T::hasMarkO, 0, 0,  1,  1)
-                || this.fillBy(Figure3T::hasMarkO, this.table.length - 1, 0, -1, 1);
+        return isWinDiagonals(false) || isWinHorizontalOrVertical(false);
     }
 
+
     /**
-     * Проверяет диагональные, вертикальные или горизонтальные линии игрового поля
-     * игры "крестики-нолики" на победную комбинацию.
-     * @param predicate функциональный интерфейс для методов {@link Figure3T#hasMarkO()} и {@link Figure3T#hasMarkX()}
-     * @param startX - координата X клетки игрового поля, откуда начинается проверка выигрышной линии
-     * @param startY - координата O клетки игрового поля, откуда начинается проверка выигрышной линии
-     * @param deltaX - напрвление движения по X проверки выигрышной линии
-     * @param deltaY - напрвление движения по O проверки выигрышной линии
-     * @return True, если крестики победили.
+     * Проверяет на победную комбинацию обе диагонали игрового поля
+     *
+     * @param isWinX если true, то проверяет победные комбинации на диаоналях для крестиков, false - для ноликов
+     * @return True, если одна из диагоналей содержит победную комбинацию.
      */
-    public boolean fillBy(Predicate<Figure3T> predicate, int startX, int startY, int deltaX, int deltaY) {
-        boolean result = true;
-        for (int index = 0; index != this.table.length; index++) {
-            Figure3T cell = this.table[startX][startY];
-            startX += deltaX;
-            startY += deltaY;
-            if (!predicate.test(cell)) {
-                result = false;
+    public boolean isWinDiagonals(boolean isWinX) {
+        boolean secondaryDiagWin = true;
+        boolean mainDiagWin = true;
+        for (int outer = 0; outer < table.length; outer++) {
+            if (isWinX) {
+                if (!table[table.length - 1][0].hasMarkX() || !table[outer][table.length - 1 - outer].hasMarkX()) { // поменять на and
+                    secondaryDiagWin = false;
+                    for (int innerX = 0; innerX < table.length; innerX++) {
+                        if (!table[0][0].hasMarkX() || !table[innerX][innerX].hasMarkX()) {
+                            mainDiagWin = false;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            } else {
+                if (!table[table.length - 1][0].hasMarkO() || !table[outer][table.length - 1 - outer].hasMarkO()) {
+                    secondaryDiagWin = false;
+                    for (int innerO = 0; innerO < table.length; innerO++) {
+                        if (!table[0][0].hasMarkO() || !table[innerO][innerO].hasMarkO()) {
+                            mainDiagWin = false;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return secondaryDiagWin || mainDiagWin;
+    }
+
+
+    /**
+     * Проверяет на победнкю комбинацию все вертикали и горизонтали игрового поля
+     *
+     * @param isWinX если true, то проверяет победные комбинации на вертикалях и горизонталях для ноликов, false - для крестиков.
+     * @return True, если на одной из верикалей или горизантелей содержит победную комбинацию.
+     */
+    public boolean isWinHorizontalOrVertical(boolean isWinX) {
+        boolean isVerticalWin = false;
+        boolean isHorizontalWin = false;
+        for (int i = 0; i < table.length; i++) {
+            isVerticalWin = true;
+            isHorizontalWin = true;
+            for (int j = 0; j < table[i].length; j++) {
+                if (isWinX) {
+                    if (!table[i][j].hasMarkX()) {
+
+                        isHorizontalWin = false;
+                    }
+                    if (!table[j][i].hasMarkX()) {
+                        isVerticalWin = false;
+                    }
+                } else {
+                    if (!table[i][j].hasMarkO()) {
+                        isHorizontalWin = false;
+                    }
+                    if (!table[j][i].hasMarkO()) {
+                        isVerticalWin = false;
+                    }
+                }
+            }
+            if (isVerticalWin || isHorizontalWin) {
                 break;
             }
         }
-        return result;
+        return isVerticalWin || isHorizontalWin;
     }
 
     /**
      * Проверяет есть ли игровом поле не заполненные клетки.
+     *
      * @return False, если поле заполнено.
      */
     public boolean hasGap() {
