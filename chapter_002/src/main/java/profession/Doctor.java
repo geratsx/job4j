@@ -9,8 +9,15 @@ package profession;
  */
 public class Doctor extends Profession {
 
+
+    private String name;
+
+    public Doctor(String name, String profession) {
+        super(name, profession);
+    }
+
     /**
-     * Разворачивает значения в массиве в обратном порядке.
+     * Лечит пациента.
      *
      * @param  patient - пациент
      */

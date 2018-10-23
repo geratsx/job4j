@@ -9,6 +9,12 @@ package profession;
  */
 public class Profession {
 
+
+    public Profession(String name, String profession) {
+        this.name = name;
+        this.profession = profession;
+    }
+
     private String name;
     private String profession;
 }

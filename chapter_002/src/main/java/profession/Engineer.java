@@ -9,8 +9,14 @@ package profession;
  */
 public class Engineer extends Profession {
 
+    private String name;
+
+    public Engineer(String name, String profession) {
+        super(name, profession);
+    }
+
     /**
-     * Разворачивает значения в массиве в обратном порядке.
+     * Строит дом.
      *
      * @param house дом
      */

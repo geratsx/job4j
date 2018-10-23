@@ -8,8 +8,15 @@ package profession;
  */
 public class Teacher extends Profession {
 
+    private String name;
+
+    public Teacher(String name, String profession) {
+        super(name, profession);
+        this.name = name;
+    }
+
     /**
-     * Разворачивает значения в массиве в обратном порядке.
+     * Учит студента.
      *
      * @param student студент
      */
