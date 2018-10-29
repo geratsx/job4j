@@ -1,6 +1,7 @@
 package tracker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
@@ -53,15 +54,14 @@ public class Tracker {
      */
     public void replace(String id, Item item) {
         int index = 0;
-        for (int i = 0; i < items.length; i++) {
+        for (int i = 0; i < position; i++) {
             if (items[i].getId().equals(id)) {
-                index = i;
+                item.setId(this.generateId());
+                items[index] = item;
                 break;
             }
         }
-        items[index] = item;
     }
-
     /**
      * Метод реализующий заявки из хранилища
      *
@@ -97,13 +97,17 @@ public class Tracker {
      * @return Массив найденных заявок
      */
     public Item[] findByName(String key) {
-        ArrayList<Item> result = new ArrayList<>();
+        Item[] result = new Item[position];
+        int resultPosition = 0;
+        int cellIndex = 0;
         for (int i = 0; i < position; i++) {
             if (key.equals(this.items[i].getName())) {
-                result.add(this.items[i]);
+                result[cellIndex++] = items[i];
+                resultPosition++;
             }
         }
-        return result.toArray(new Item[0]);
+        result = Arrays.copyOf(result, resultPosition);
+        return result;
     }
 
     /**

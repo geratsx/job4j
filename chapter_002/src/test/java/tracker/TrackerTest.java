@@ -3,9 +3,7 @@ package tracker;
 import org.junit.Test;
 import java.util.Arrays;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class TrackerTest {
 
@@ -32,7 +30,6 @@ public class TrackerTest {
         Item[] items = new Item[1];
         items[0] = newItem;
         assertThat(tracker.findByName(newItem.getName()), is(items));
-
     }
 
     @Test
