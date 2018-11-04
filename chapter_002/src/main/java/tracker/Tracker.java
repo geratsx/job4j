@@ -50,32 +50,41 @@ public class Tracker {
      *
      * @param id   Id заявки, которую нужно заменить
      * @param item Заявка, которую добавляем в трекер в замен другой заявки
+     * @return True, если элемент для замены найден. В противном случае - false
      */
-    public void replace(String id, Item item) {
+    public boolean replace(String id, Item item) {
         int index = 0;
+        boolean result = false;
         for (int i = 0; i < position; i++) {
             if (items[i].getId().equals(id)) {
                 item.setId(id);
                 items[index] = item;
+                result = true;
                 break;
             }
         }
+
+        return result;
     }
     /**
      * Метод реализующий заявки из хранилища
-     *
      * @param id Id заявки, которую нужно удалить
+     * @return True, если элемент для удаления найден. В противном случае - false
      */
-    public void delete(String id) {
+    public boolean delete(String id) {
+        boolean result = false;
         int index;
         for (int i = 0; i < position; i++) {
             if (items[i].getId().equals(id)) {
                 index = i;
                 System.arraycopy(items, index + 1, items, index, items.length - position - 1);
                 position--;
+                result = true;
                 break;
             }
         }
+
+        return result;
     }
 
     /**

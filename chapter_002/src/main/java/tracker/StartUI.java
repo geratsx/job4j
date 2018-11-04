@@ -117,7 +117,7 @@ public class StartUI {
         System.out.println("-----------------Find item by Id-----------------");
         String id = this.input.ask("Enter items id for searching: ");
         Item item = this.tracker.findById(id);
-        if (!item.equals(null)) {
+        if (item != null) {
             System.out.println(item.toString());
         } else {
             System.out.println("Item not found");
@@ -132,8 +132,11 @@ public class StartUI {
     private void deleteItem() {
         System.out.println("-----------------Deleting item-----------------");
         String id = this.input.ask("Enter items id to delete : ");
-        this.tracker.delete(id);
-        System.out.println("Item with id = " + id + " was successfully deleted.");
+        if (this.tracker.delete(id)) {
+            System.out.println("Item with id = " + id + " was successfully deleted.");
+        } else {
+            System.out.println("Item with id = " + id + " not found.");
+        }
     }
 
     /**
@@ -149,9 +152,11 @@ public class StartUI {
         Item item = new Item();
         item.setName(name);
         item.setDesc(desc);
-        this.tracker.replace(id, item);
-        System.out.println("Item with id = " + id + " was successfully changed.");
-
+        if (this.tracker.replace(id, item)) {
+            System.out.println("Item with id = " + id + " was successfully changed.");
+        } else {
+            System.out.println("Item with id = " + id + " not found");
+        }
     }
 
     /**

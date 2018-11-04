@@ -75,4 +75,38 @@ public class TrackerTest {
        tracker.delete(previos.getId());
        assertFalse(Arrays.asList(tracker.findAll()).contains(previos));
    }
+
+    @Test
+    public void whenDeleteItemButTrackerDoesNotHaveThisItemThenFalse() {
+        Tracker tracker = new Tracker();
+        Item previos = new Item("test name", "previos");
+        tracker.add(previos);
+        assertFalse(tracker.delete("111"));
+    }
+
+    @Test
+    public void whenDeleteItemAndTrackerHaveThisItemThenTrue() {
+        Tracker tracker = new Tracker();
+        Item previos = new Item("test name", "previos");
+        tracker.add(previos);
+        assertTrue(tracker.delete(previos.getId()));
+    }
+
+    @Test
+    public void whenEditItemButTrackerDoesNotHaveThisItemThenFalse() {
+        Tracker tracker = new Tracker();
+        Item previos = new Item("test name", "previos");
+        tracker.add(previos);
+        Item next = new Item("test name2", "previos",  "111");
+        assertFalse(tracker.replace("111", next));
+    }
+
+    @Test
+    public void whenEditItemAndTrackerHaveThisItemThenTrue() {
+        Tracker tracker = new Tracker();
+        Item previos = new Item("test name", "previos");
+        Item next = new Item("test name2", "previos", "111");
+        tracker.add(previos);
+        assertTrue(tracker.replace(previos.getId(), next));
+    }
 }
