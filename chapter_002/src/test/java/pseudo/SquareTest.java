@@ -15,9 +15,9 @@ public class SquareTest {
                 square.draw(),
                 is(
                         new StringBuilder()
-                                .append(" +++++++" + System.lineSeparator())
-                                .append(" +     +" + System.lineSeparator())
-                                .append(" +     +" + System.lineSeparator())
+                                .append(" +++++++").append(System.lineSeparator())
+                                .append(" +     +").append(System.lineSeparator())
+                                .append(" +     +").append(System.lineSeparator())
                                 .append(" +++++++")
                                 .toString()
                 )
