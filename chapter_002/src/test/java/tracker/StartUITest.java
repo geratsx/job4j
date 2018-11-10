@@ -34,30 +34,27 @@ public class StartUITest {
 
 
     /**
-     * @return Меню трекера в виде строки
+     * Меню трекера в виде строки
      */
-    public String getMenu() {
-        return new StringBuilder()
-        .append("Menu:")
-                .append(System.lineSeparator())
-                .append(System.lineSeparator())
-                .append("0.Add new item")
-                .append(System.lineSeparator())
-                .append("1.Show all items")
-                .append(System.lineSeparator())
-                .append("2.Edit item")
-                .append(System.lineSeparator())
-                .append("3.Delete item")
-                .append(System.lineSeparator())
-                .append("4.Find item by ID")
-                .append(System.lineSeparator())
-                .append("5.Find item by name")
-                .append(System.lineSeparator())
-                .append("6.Exit")
-                .append(System.lineSeparator())
-                .append(System.lineSeparator())
-        .toString();
-    }
+    private final StringBuilder menu = new StringBuilder()
+            .append("Menu:")
+            .append(System.lineSeparator())
+            .append(System.lineSeparator())
+            .append("0.Add new item")
+            .append(System.lineSeparator())
+            .append("1.Show all items")
+            .append(System.lineSeparator())
+            .append("2.Edit item")
+            .append(System.lineSeparator())
+            .append("3.Delete item")
+            .append(System.lineSeparator())
+            .append("4.Find item by ID")
+            .append(System.lineSeparator())
+            .append("5.Find item by name")
+            .append(System.lineSeparator())
+            .append("6.Exit")
+            .append(System.lineSeparator())
+            .append(System.lineSeparator());
 
     @Test
     public void whenUserWontToSeeAllItemsThenPrintAllItems() {
@@ -67,7 +64,7 @@ public class StartUITest {
         new StartUI(input, tracker).init();
         assertThat(new String(out.toByteArray()), is(
                 new StringBuilder()
-                        .append(getMenu())
+                        .append(menu.toString())
                         .append("List of all items: ")
                         .append(System.lineSeparator())
                         .append(System.lineSeparator())
@@ -82,11 +79,10 @@ public class StartUITest {
                         .append("'")
                         .append(System.lineSeparator())
                         .append(System.lineSeparator())
-                        .append(getMenu())
+                        .append(menu.toString())
                         .toString()
         ));
     }
-
 
     @Test
     public void whenUserInputIdThenTrackerPrintThisItem() {
@@ -96,7 +92,7 @@ public class StartUITest {
         new StartUI(input, tracker).init();
         assertThat(new String(out.toByteArray()), is(
                 new StringBuilder()
-                        .append(getMenu())
+                        .append(menu.toString())
                         .append("-----------------Find item by Id-----------------")
                         .append(System.lineSeparator())
                         .append("Item name='")
@@ -109,7 +105,7 @@ public class StartUITest {
                         .append(item.getId())
                         .append("'")
                         .append(System.lineSeparator())
-                        .append(getMenu())
+                        .append(menu.toString())
                         .toString()
         ));
     }
