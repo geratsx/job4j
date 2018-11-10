@@ -9,7 +9,7 @@ public class TriangleTest {
 
 
     @Test
-    public void whenDrawSquare() {
+    public void whenDrawTriangle() {
         Triangle triangle = new Triangle();
         assertThat(
                 triangle.draw(),
