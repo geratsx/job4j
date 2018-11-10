@@ -60,7 +60,6 @@ public class StartUI {
         this.tracker = tracker;
     }
 
-
     /**
      * Метод реализующий обработку выбранных пунктов меню
      */
@@ -202,8 +201,8 @@ public class StartUI {
         System.out.println("1.Show all items");
         System.out.println("2.Edit item");
         System.out.println("3.Delete item");
-        System.out.println("4.Find by item by ID");
-        System.out.println("5.Find by item by name");
+        System.out.println("4.Find item by ID");
+        System.out.println("5.Find item by name");
         System.out.println("6.Exit");
         System.out.println();
     }
