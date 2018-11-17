@@ -14,4 +14,11 @@ public interface Input {
      * @param question Вопрос пользователю.
      */
     String ask(String question);
+
+    /**
+     * Метод реализует диалог с пользователем.
+     * @param question Вопрос пользователю.
+     * @param range допустимый интервал ответов
+     */
+    int ask(String question, int[] range);
 }

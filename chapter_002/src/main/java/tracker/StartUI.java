@@ -1,12 +1,9 @@
 package tracker;
 
-
 /**
  * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
  * @version $Id$
  * @since 0.1
- * <p>
- *
  * Класс реализует логику общения с пользователем в консоли и логику меню
  */
 public class StartUI {
@@ -48,16 +45,21 @@ public class StartUI {
      */
     private final Tracker tracker;
 
+    /**
+     * Флаг для выхода из меню
+     */
     private boolean isExit = false;
 
-
+    /**
+     * Метод для установки флага для выхода из меню
+     * @param isExit значение флага для выхода из меню
+     */
     public void setExit(boolean isExit) {
         this.isExit = isExit;
     }
 
     /**
      * Конструктор, инициализирующий поля
-     *
      * @param input   Ввод данных
      * @param tracker Хранилище заявок
      */
@@ -68,22 +70,26 @@ public class StartUI {
 
 
     /**
-     * Метод реализующий обработку выбранных пунктов меню
+     * Метод реализующий обработку выбранных пунктов меню пока пользоватль н захочет выйти
      */
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker, this);
         menu.fillActions();
-
+        int rangeLength = menu.getActionsLength();
+        int[] range = new int[rangeLength];
+        for (int i = 0; i < range.length; i++) {
+            range[i] = i;
+        }
         do {
             System.out.println();
             menu.show();
             System.out.println();
-            menu.select(Integer.parseInt((input.ask("Please, select: "))));
+            menu.select(input.ask("Please, select: ", range));
         } while (!isExit);
     }
 
 
     public static void main(String[] args) {
-        new StartUI(new ConsoleInput(), new Tracker()).init();
+        new StartUI(new ValidateInput(), new Tracker()).init();
     }
 }

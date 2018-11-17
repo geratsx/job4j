@@ -29,7 +29,10 @@ public class MenuTracker {
     private List<UserAction> actions = new ArrayList<>();
     private StartUI startUI;
 
-
+    public MenuTracker(Input input, Tracker tracker) {
+        this.input = input;
+        this.tracker = tracker;
+    }
 
     public MenuTracker(Input input, Tracker tracker, StartUI startUI) {
         this.input = input;
