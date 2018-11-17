@@ -7,7 +7,26 @@ package tracker;
  * @see tracker.ConsoleInput
  * Класс реализует ввод данных с консоли с валидацией
  */
-public class ValidateInput extends ConsoleInput {
+public class ValidateInput implements Input {
+    /**
+     * Ввод данных
+     */
+    private final Input input;
+
+    public ValidateInput(final Input input) {
+        this.input = input;
+    }
+
+    /**
+     * Реализация метода для общения с пользователем в консоли
+     * @param question вопрос пользователю
+     * @see Input#ask
+     * @return напечатанную пользователем строку в консоли
+     */
+    @Override
+    public String ask(String question) {
+        return this.input.ask(question);
+    }
 
     /**
      * Реализация метода для общения с пользователем в консоли
@@ -21,18 +40,17 @@ public class ValidateInput extends ConsoleInput {
     @Override
     public int ask(String question, int[] range) {
         boolean invalid = true;
-        int userInputValue = -1;
+        int value = -1;
         do {
             try {
-                userInputValue = super.ask(question, range);
+                value = this.input.ask(question, range);
                 invalid = false;
             } catch (MenuOutException moe) {
                 System.out.println("Out of menu range. Please, select valid paragraph of menu.");
             } catch (NumberFormatException nfe) {
                 System.out.println("You enter not a number. Please, enter valid paragraph of menu.");
             }
-        }
-        while (invalid);
-        return userInputValue;
+        } while (invalid);
+        return  value;
     }
 }
