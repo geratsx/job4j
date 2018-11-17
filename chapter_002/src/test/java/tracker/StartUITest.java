@@ -37,8 +37,8 @@ public class StartUITest {
      * Меню трекера в виде строки
      */
     private final StringBuilder menu = new StringBuilder()
-            .append("Menu:")
-            .append(System.lineSeparator())
+            /*.append("Menu:")
+            .append(System.lineSeparator())*/
             .append(System.lineSeparator())
             .append("0.Add new item")
             .append(System.lineSeparator())
