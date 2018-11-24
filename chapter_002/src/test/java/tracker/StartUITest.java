@@ -46,7 +46,7 @@ public class StartUITest {
             .append(System.lineSeparator())
             .append("3.Delete item")
             .append(System.lineSeparator())
-            .append("4.Find item by ID")
+            .append("4.Find item by id")
             .append(System.lineSeparator())
             .append("5.Find item by name")
             .append(System.lineSeparator())
