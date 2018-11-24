@@ -29,4 +29,11 @@ public class ValidateInputTest {
         input.ask("Enter", new int[] {1});
         assertThat(this.mem.toString(), is("You enter not a number. Please, enter valid paragraph of menu.\r\n"));
     }
+
+    @Test
+    public void whenInputNotInRange() {
+        StubInput input =  new StubInput(new String[] {"31"});
+        input.ask("Enter", new int[] {2});
+        assertThat(this.mem.toString(), is("Out of menu range. Please, select valid paragraph of menu.\r\n"));
+    }
 }

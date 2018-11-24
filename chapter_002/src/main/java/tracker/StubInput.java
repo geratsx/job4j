@@ -36,7 +36,22 @@ public class StubInput implements Input {
     }
 
     @Override
-    public int ask(String question, int[] range) {
-        return Integer.parseInt(this.value[this.position++]);
+    public int ask(String question, int[] range) throws MenuOutException {
+        int key = Integer.parseInt(this.value[this.position++]);
+        boolean exist = false;
+        try {
+            for (int value : range) {
+                if (value == key) {
+                    exist = true;
+                    break;
+                }
+            }
+            if (!exist) {
+                throw new MenuOutException("Out of menu range. Please, select valid paragraph of menu.");
+            }
+        } catch (MenuOutException me) {
+            System.out.println(me.getLocalizedMessage());
+        }
+        return key;
     }
 }
