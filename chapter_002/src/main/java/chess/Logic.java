@@ -19,7 +19,7 @@ public class Logic {
         this.figures[this.index++] = figure;
     }
 
-    boolean isBusyWay(Cell[] way) throws OccupiedWayException {
+    private boolean isBusyWay(Cell[] way) throws OccupiedWayException {
         boolean result = false;
         for (int i = 0; i < way.length - 1; i++) {
             Cell tmp = way[i];
@@ -32,7 +32,7 @@ public class Logic {
         return result;
     }
 
-    public boolean move(Cell source, Cell dest) throws ImposibleMoveException, OccupiedWayException, FigureNotFoundException {
+    public boolean move(Cell source, Cell dest) {
         boolean rst = false;
         try {
             int index = this.findBy(source);

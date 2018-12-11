@@ -1,12 +1,10 @@
 package chess.firuges.black;
 
-import chess.OccupiedWayException;
 import chess.firuges.Cell;
 import chess.firuges.Figure;
 import chess.ImposibleMoveException;
 
 /**
- *
  * @author Petr Arsentev (parsentev@yandex.ru)
  * @version $Id$
  * @since 0.1
@@ -24,22 +22,17 @@ public class PawnBlack implements Figure {
     }
 
 
-    public boolean checkWay(Cell source, Cell dest) throws ImposibleMoveException, OccupiedWayException {
-        boolean result = source.y == dest.y + 1 && source.x == dest.x;
-        if (!result) {
-            throw new ImposibleMoveException("Wrong way!");
-        }
-        return result;
+    private boolean checkWay(Cell source, Cell dest) {
+        return source.y == dest.y + 1 && source.x == dest.x;
     }
 
     @Override
-    public Cell[] way(Cell source, Cell dest) throws ImposibleMoveException, OccupiedWayException {
-        Cell[] steps = new Cell[0];
-            boolean isRightWay = checkWay(source, dest);
-            if (isRightWay) {
-                steps = new Cell[]{dest};
-            }
-        return steps;
+    public Cell[] way(Cell source, Cell dest) throws ImposibleMoveException {
+        boolean isRightWay = checkWay(source, dest);
+        if (!isRightWay) {
+            throw new ImposibleMoveException("Wrong way!");
+        }
+        return new Cell[]{dest};
     }
 
     @Override
