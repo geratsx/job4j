@@ -55,17 +55,18 @@ public class ChessTest {
         assertThat(pawn.way(source, dest), is(expected));
     }
 
-    /*@Test(expected = OccupiedWayException.class)
+    @Test
     public void ifWayIsBusyThenException() {
-
         Logic logic = new Logic();
         PawnBlack pawn = new PawnBlack(Cell.A7);
         PawnBlack pawn2 = new PawnBlack(Cell.A6);
-
+        logic.add(pawn);
         logic.add(pawn2);
         Cell source = pawn.position();
         Cell dest = Cell.A6;
         pawn.way(source, dest);
-//        assertThat(pawn.way(source, dest), is(expected));
-    }*/
+        logic.move(source, dest);
+        pawn.way(source, dest);
+        assertThat(this.mem.toString(), is("Busy way!\r\n"));
+    }
 }

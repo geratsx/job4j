@@ -47,11 +47,7 @@ public class Logic {
                     }
                 }
             }
-        } catch (ImposibleMoveException ime) {
-            System.out.println(ime.getMessage());
-        } catch (FigureNotFoundException fe) {
-            System.out.println(fe.getMessage());
-        } catch (OccupiedWayException oce) {
+        } catch (ImposibleMoveException | FigureNotFoundException | OccupiedWayException oce) {
             System.out.println(oce.getMessage());
             rst = false;
         }
