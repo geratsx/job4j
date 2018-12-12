@@ -21,9 +21,9 @@ public class Logic {
 
     private boolean isBusyWay(Cell[] way) throws OccupiedWayException {
         boolean result = false;
-        for (int i = 0; i < way.length - 1; i++) {
+        for (int i = 0; i < way.length; i++) {
             Cell tmp = way[i];
-            for (int j = 0; j < figures.length - 1; j++) {
+            for (int j = 0; j < figures.length; j++) {
                 if (figures[j].position().x == tmp.x && figures[j].position().y == tmp.y) {
                     throw new OccupiedWayException("Busy way!");
                 }
