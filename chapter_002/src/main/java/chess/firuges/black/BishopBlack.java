@@ -44,8 +44,8 @@ public class BishopBlack implements Figure {
             throw new ImposibleMoveException("Wrong way!");
         } else {
             for (int i = 0; i < steps.length; i++) {
-                stepX = stepX + deltaX;
-                stepY = stepY + deltaY;
+                stepX += deltaX;
+                stepY += deltaY;
                 steps[i] = Cell.values()[8 * stepX + stepY];
             }
 

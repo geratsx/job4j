@@ -19,15 +19,13 @@ public class Logic {
         this.figures[this.index++] = figure;
     }
 
-    private boolean isBusyWay(Cell[] way) throws OccupiedWayException {
+    private boolean isBusyWay(Cell[] way) {
         boolean result = false;
         for (int i = 0; i < way.length; i++) {
             Cell tmp = way[i];
             for (int j = 0; j < figures.length; j++) {
                 if (figures[j].position().x == tmp.x && figures[j].position().y == tmp.y) {
                     result = true;
-//                    throw new OccupiedWayException("Busy way!");
-
                 }
             }
         }
@@ -55,6 +53,7 @@ public class Logic {
             System.out.println(fe.getMessage());
         } catch (OccupiedWayException oce) {
             System.out.println(oce.getMessage());
+            rst = false;
         }
         return rst;
     }
