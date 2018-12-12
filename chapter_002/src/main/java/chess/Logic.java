@@ -25,7 +25,9 @@ public class Logic {
             Cell tmp = way[i];
             for (int j = 0; j < figures.length; j++) {
                 if (figures[j].position().x == tmp.x && figures[j].position().y == tmp.y) {
-                    throw new OccupiedWayException("Busy way!");
+                    result = true;
+//                    throw new OccupiedWayException("Busy way!");
+
                 }
             }
         }
@@ -40,7 +42,9 @@ public class Logic {
                 Cell[] steps = this.figures[index].way(source, dest);
                 if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
                     rst = true;
-                    if (!isBusyWay(steps)) {
+                    if (isBusyWay(steps)) {
+                        throw new OccupiedWayException("Busy way!");
+                    } else {
                         this.figures[index] = this.figures[index].copy(dest);
                     }
                 }
