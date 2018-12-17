@@ -1,4 +1,4 @@
-package chess;
+package chess.firuges.exceptions;
 /**
  * Класс реализует исключение когда на пути, который должна пройти фигура, есть другие фигуры..
  * @see java.lang.RuntimeException

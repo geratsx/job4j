@@ -1,7 +1,7 @@
 package chess.firuges.black;
 
 
-import chess.ImposibleMoveException;
+import chess.firuges.exceptions.ImposibleMoveException;
 import chess.firuges.Cell;
 import chess.firuges.Figure;
 
@@ -23,7 +23,7 @@ public class BishopBlack implements Figure {
     }
     /**
      * Метод для получения ячейки, в которой стоит фигура
-     * @return ячека, в которой стоит данная фигура
+     * @return ячейка, в которой стоит данная фигура
      */
     @Override
     public Cell position() {

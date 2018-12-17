@@ -2,6 +2,9 @@ package chess;
 
 import chess.firuges.Cell;
 import chess.firuges.Figure;
+import chess.firuges.exceptions.FigureNotFoundException;
+import chess.firuges.exceptions.ImposibleMoveException;
+import chess.firuges.exceptions.OccupiedWayException;
 
 /**
  * Класс логику передижения фигур
@@ -93,7 +96,7 @@ public class Logic {
     private int findBy(Cell cell) throws FigureNotFoundException {
         int rst = -1;
         for (int index = 0; index != this.figures.length; index++) {
-            if (this.figures[index] != null && this.figures[index].position().equals(cell)) { // если в этой ячейке есть фигура и там фигура та же, которую мы ищем
+            if (this.figures[index] != null && this.figures[index].position().equals(cell)) {
                 rst = index;
                 break;
             }

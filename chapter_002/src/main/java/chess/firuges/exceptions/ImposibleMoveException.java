@@ -1,4 +1,4 @@
-package chess;
+package chess.firuges.exceptions;
 /**
  * Класс реализует исключение когда фигура не может так ходить.
  * @see java.lang.RuntimeException

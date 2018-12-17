@@ -2,7 +2,7 @@ package chess.firuges.black;
 
 import chess.firuges.Cell;
 import chess.firuges.Figure;
-import chess.ImposibleMoveException;
+import chess.firuges.exceptions.ImposibleMoveException;
 
 /**
  * Класс реализует шахматную фигуру - черная пешка.
@@ -23,7 +23,7 @@ public class PawnBlack implements Figure {
 
     /**
      * Метод для получения ячейки, в которой стоит фигура
-     * @return ячека, в которой стоит данная фигура
+     * @return ячейка, в которой стоит данная фигура
      */
     @Override
     public Cell position() {
