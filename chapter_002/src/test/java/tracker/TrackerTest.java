@@ -14,6 +14,40 @@ public class TrackerTest {
         tracker.add(newItem);
         assertThat(tracker.findById(newItem.getId()), is(newItem));
     }
+
+    @Test
+    public void whenThereIsIdThenFindItInTheTrackerEnum() {
+        TrackerEnum tracker = TrackerEnum.INSTANCE;
+        Item newItem = new Item("test name", "test");
+        tracker.add(newItem);
+        assertThat(tracker.findById(newItem.getId()), is(newItem));
+    }
+
+    @Test
+    public void whenThereIsIdThenFindItInTheTrackerInner() {
+        TrackerInner tracker = TrackerInner.getInstance();
+        Item newItem = new Item("test name", "test");
+        tracker.add(newItem);
+        assertThat(tracker.findById(newItem.getId()), is(newItem));
+    }
+
+    @Test
+    public void whenThereIsIdThenFindItInTheTrackerStaticLazy() {
+        TrackerStaticLazy tracker =  TrackerStaticLazy.getInstance();
+        Item newItem = new Item("test name", "test");
+        tracker.add(newItem);
+        assertThat(tracker.findById(newItem.getId()), is(newItem));
+    }
+
+    @Test
+    public void whenThereIsIdThenFindItInTheTrackerStaticEager() {
+        TrackerStaticEager tracker =  TrackerStaticEager.getInstance();
+        Item newItem = new Item("test name", "test");
+        tracker.add(newItem);
+        assertThat(tracker.findById(newItem.getId()), is(newItem));
+    }
+
+
     @Test
     public void whenAddNewItemThenItemInTheTracker() {
         Tracker tracker = new Tracker();
