@@ -1,3 +1,5 @@
+package dictionary;
+
 import org.junit.Test;
 import dictionary.Person;
 import dictionary.PhoneDictionary;
