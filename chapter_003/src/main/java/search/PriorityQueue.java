@@ -1,6 +1,7 @@
 package search;
 
 import java.util.LinkedList;
+
 /**
  * Класс реализует базовую очередь с приоритетами на основе LinkedList.
  *
@@ -11,6 +12,7 @@ import java.util.LinkedList;
 public class PriorityQueue {
 
     private LinkedList<Task> tasks = new LinkedList<>();
+    private int elemCounter = 0;
 
     /**
      * Метод добавляет задачу в очередь в соответствии с ее приорететом {@link Task#priority}.
@@ -18,19 +20,16 @@ public class PriorityQueue {
      * @param task Новая задача, которую нужно добавить в очередь.
      */
     public void put(Task task) {
-        if (tasks.size() == 0) {
-            tasks.add(task);
-        } else if (task.getPriority() < tasks.get(0).getPriority()) {
-            tasks.add(0, task);
-        } else if (tasks.get(tasks.size() - 1).getPriority() < task.getPriority()) {
-            tasks.add(tasks.size(), task);
-        } else {
-            int index = 0;
-            while (tasks.get(index).getPriority() < task.getPriority()) {
-                index++;
+        elemCounter++;
+        for (int i = 0; i != elemCounter; i++) {
+            if (tasks.size() == 0 || task.getPriority() < tasks.get(0).getPriority()) {
+                tasks.add(0, task);
+            } else {
+            if (task.getPriority() < tasks.get(i).getPriority()) {
+                tasks.add(i - 1, task);
             }
-            tasks.add(index, task);
         }
+       }
     }
 
     /**
