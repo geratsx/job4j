@@ -1,6 +1,7 @@
 package list;
 
 import java.util.ArrayList;
+
 /**
  * Класс реализует конвертер ArrayList в двумерный массив.
  *
@@ -21,19 +22,18 @@ public class ConvertList2Array {
      */
     public int[][] toArray(ArrayList<Integer> list, int rows) {
         int arraySize = list.size();
-        if (arraySize % rows > 0) {
-            int el = rows - (arraySize % rows);
-            for (int i = arraySize; i != arraySize + el; i++) {
-                list.add(0);
-            }
+        while (arraySize % rows != 0) {
+            arraySize++;
         }
-        int cells = list.size() / rows;
+        int cells = arraySize / rows;
         int[][] array = new int[rows][cells];
-        int index = 0;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cells; j++) {
-                array[i][j] = list.get(index);
-                index++;
+        int outerIndex = 0;
+        for (int[] arrayTmp : array) {
+            int innerIndex = 0;
+            for (int elemTmp : arrayTmp) {
+                if (outerIndex < list.size()) {
+                    arrayTmp[innerIndex++] = list.get(outerIndex++);
+                }
             }
         }
         return array;
