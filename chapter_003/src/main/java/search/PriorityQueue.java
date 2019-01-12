@@ -25,11 +25,11 @@ public class PriorityQueue {
             if (tasks.size() == 0 || task.getPriority() < tasks.get(0).getPriority()) {
                 tasks.add(0, task);
             } else {
-            if (task.getPriority() < tasks.get(i).getPriority()) {
-                tasks.add(i - 1, task);
+                if (task.getPriority() < tasks.get(i).getPriority()) {
+                    tasks.add(i - 1, task);
+                }
             }
         }
-       }
     }
 
     /**
