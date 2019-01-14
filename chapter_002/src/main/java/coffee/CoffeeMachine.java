@@ -38,20 +38,21 @@ public class CoffeeMachine {
         int changeCounter = 0;
         if (change == 0) {
             result.add(0);
-        } else if (change < 0) {
-            throw new SmallBillException("Too little money!");
-        } else {
+        } else if (change > 0) {
             for (int i = 0; i < coinsSort.length; i++) {
                 int coin = coinsSort[i];
-                while (changeCounter <= change) {
-                    if (changeCounter + coin <= change) {
+                boolean changeFlag = false;
+                while (!changeFlag) {
+                    if (changeCounter > change || changeCounter + coin > change) {
+                        changeFlag = true;
+                    } else {
                         result.add(coin);
                         changeCounter += coin;
-                    } else {
-                        break;
                     }
                 }
             }
+        } else {
+            throw new SmallBillException("Too little money!");
         }
         return listToArray(result);
     }
