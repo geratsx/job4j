@@ -1,6 +1,7 @@
 package list;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Класс реализует конвертер ArrayList в двумерный массив.
@@ -37,5 +38,21 @@ public class ConvertList2Array {
             }
         }
         return array;
+    }
+
+    /**
+     * Метод  конвертирует List массивов integer в List integer, где элементы в том же порядке.
+     *
+     * @param list Коллекция, которую нужно конвертировать.
+     * @return List содержащий все числа из массивов входящего листа.
+     */
+    public List<Integer> convert(List<int[]> list) {
+        List<Integer> result = new ArrayList<>();
+        for (int[] arrayTmp : list) {
+            for (int i = 0; i < arrayTmp.length; i++) {
+                result.add(arrayTmp[i]);
+            }
+        }
+        return result;
     }
 }
