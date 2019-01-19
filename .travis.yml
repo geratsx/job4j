@@ -14,3 +14,6 @@ notifications:
       geraltsx@gmail.com
     on_success: never # default: change
     on_failure: always # default: always
+
+    env:
+      global: CODECOV_TOKEN="5bca2f8d-8716-4da9-b424-3fabf71c0e23"
