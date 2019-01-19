@@ -1,6 +1,7 @@
 package sort;
 
 import java.util.Comparator;
+
 /**
  * Класс реализует компаратор для строк.
  *
@@ -13,7 +14,7 @@ public class ListCompare implements Comparator<String> {
     /**
      * Метод посимвольно сравнивает строки.
      *
-     * @param left Первая строка
+     * @param left  Первая строка
      * @param right Вторая строка
      * @return Возвращает 0 если строки равны, значение больше 0, если первая строка больше,
      * и значение меньше 0, если первая строка меньше.
@@ -23,12 +24,12 @@ public class ListCompare implements Comparator<String> {
         int minLenght = Math.min(left.length(), right.length());
         int index = 0;
         while (index < minLenght) {
-        char leftChar = left.charAt(index);
-        char rightChar = right.charAt(index);
+            char leftChar = left.charAt(index);
+            char rightChar = right.charAt(index);
             if (leftChar != rightChar) {
-               return leftChar - rightChar;
+                return leftChar - rightChar;
             }
-                index++;
+            index++;
         }
         return left.length() - right.length();
     }
