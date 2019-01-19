@@ -23,14 +23,16 @@ public class ListCompare implements Comparator<String> {
     public int compare(String left, String right) {
         int minLenght = Math.min(left.length(), right.length());
         int index = 0;
+        int result = Integer.compare(left.length(), right.length());
         while (index < minLenght) {
             char leftChar = left.charAt(index);
             char rightChar = right.charAt(index);
             if (leftChar != rightChar) {
-                return leftChar - rightChar;
+                result = Character.compare(leftChar, rightChar);
+                break;
             }
             index++;
         }
-        return left.length() - right.length();
+        return result;
     }
 }
