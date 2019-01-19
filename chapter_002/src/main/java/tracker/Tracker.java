@@ -74,7 +74,7 @@ public class Tracker {
         boolean result = false;
         for (int i = 0; i < position; i++) {
             if (items.get(i).getId().equals(id)) {
-                items.remove(items.get(i));
+                items.remove(i);
                 position--;
                 result = true;
                 break;
