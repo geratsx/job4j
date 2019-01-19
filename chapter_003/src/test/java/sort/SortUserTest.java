@@ -25,4 +25,30 @@ public class SortUserTest {
         expect.add(u4);
         assertThat(result, is(expect));
     }
+
+    @Test
+    public void whenHaveListOfUsersThenSortTheirByNameLength() {
+        SortUser sortUser = new SortUser();
+        User u1 = new User("Andrey", 25);
+        User u2 = new User("Ivan", 30);
+        User u3 = new User("Alexander", 20);
+        User u4 = new User("Roman", 23);
+        List<User> users = Arrays.asList(u1, u2, u3, u4);
+        List<User> result = sortUser.sortNameLength(users);
+        List<User> expect = Arrays.asList(u2, u4, u1, u3);
+        assertThat(result, is(expect));
+    }
+
+    @Test
+    public void whenHaveListOfUsersThenSortTheirByNameAndAge() {
+        SortUser sortUser = new SortUser();
+        User u1 = new User("Сергей", 25);
+        User u2 = new User("Иван", 30);
+        User u3 = new User("Сергей", 20);
+        User u4 = new User("Иван", 25);
+        List<User> users = Arrays.asList(u1, u2, u3, u4);
+        List<User> result = sortUser.sortByAllFields(users);
+        List<User> expect = Arrays.asList(u4, u2, u3, u1);
+        assertThat(result, is(expect));
+    }
 }
