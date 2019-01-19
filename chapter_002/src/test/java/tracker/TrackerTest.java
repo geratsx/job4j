@@ -2,6 +2,8 @@ package tracker;
 
 import org.junit.Test;
 import java.util.Arrays;
+import java.util.List;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
@@ -61,8 +63,7 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         Item newItem = new Item("test name",  "test");
         tracker.add(newItem);
-        Item[] items = new Item[1];
-        items[0] = newItem;
+        List<Item> items = Arrays.asList(newItem);
         assertThat(tracker.findByName(newItem.getName()), is(items));
     }
 
@@ -75,7 +76,7 @@ public class TrackerTest {
         tracker.add(item1);
         tracker.add(item2);
         tracker.add(item3);
-        Item[] items = {item1, item2, item3};
+        List<Item> items = Arrays.asList(item1, item2, item3);
         assertThat(tracker.findAll(), is(items));
     }
 
@@ -86,7 +87,7 @@ public class TrackerTest {
         tracker.add(previos);
         Item next = new Item("123", "test name", "next");
         tracker.replace(previos.getId(), next);
-        assertTrue(Arrays.asList(tracker.findAll()).contains(next));
+        assertTrue(tracker.findAll().contains(next));
     }
 
 

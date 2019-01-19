@@ -1,5 +1,8 @@
 package tracker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
  * @version $Id$
@@ -76,9 +79,9 @@ public class StartUI {
         MenuTracker menu = new MenuTracker(this.input, this.tracker, this);
         menu.fillActions();
         int rangeLength = menu.getActionsLength();
-        int[] range = new int[rangeLength];
-        for (int i = 0; i < range.length; i++) {
-            range[i] = i;
+        List<Integer> range = new ArrayList<>(rangeLength);
+        for (int i = 0; i < rangeLength; i++) {
+            range.add(i, i);
         }
         do {
             System.out.println();

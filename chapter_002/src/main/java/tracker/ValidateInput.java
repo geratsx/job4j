@@ -1,10 +1,12 @@
 package tracker;
 
+import java.util.List;
+
 /**
  * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
  * @version $Id$
  * @since 0.1
- * @see tracker.ConsoleInput
+ * @see ConsoleInput
  * Класс реализует ввод данных с консоли с валидацией
  */
 public class ValidateInput implements Input {
@@ -38,7 +40,7 @@ public class ValidateInput implements Input {
      * @throws NumberFormatException если пользователь ввел не число
      */
     @Override
-    public int ask(String question, int[] range) {
+    public int ask(String question, List<Integer> range) {
         boolean invalid = true;
         int value = -1;
         do {
