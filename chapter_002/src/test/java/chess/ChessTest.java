@@ -75,7 +75,7 @@ public class ChessTest {
         Cell source = king.position();
         Cell dest = Cell.H7;
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Figure not found!\r\n"));
+        assertThat(this.mem.toString(), is("Figure not found!" + System.lineSeparator()));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class ChessTest {
         Cell source = knight.position();
         Cell dest = Cell.H7;
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Figure not found!\r\n"));
+        assertThat(this.mem.toString(), is("Figure not found!" + System.lineSeparator()));
     }
 
     @Test
@@ -95,7 +95,7 @@ public class ChessTest {
         Cell source = pawn.position();
         Cell dest = Cell.B1;
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Figure not found!\r\n"));
+        assertThat(this.mem.toString(), is("Figure not found!" + System.lineSeparator()));
     }
 
     @Test
@@ -105,7 +105,7 @@ public class ChessTest {
         Cell source = bishop.position();
         Cell dest = Cell.E6;
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Figure not found!\r\n"));
+        assertThat(this.mem.toString(), is("Figure not found!" + System.lineSeparator()));
     }
 
     @Test
@@ -115,7 +115,7 @@ public class ChessTest {
         Cell source = rook.position();
         Cell dest = Cell.H7;
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Figure not found!\r\n"));
+        assertThat(this.mem.toString(), is("Figure not found!" + System.lineSeparator()));
     }
 
     @Test
@@ -125,7 +125,7 @@ public class ChessTest {
         Cell source = queen.position();
         Cell dest = Cell.H7;
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Figure not found!\r\n"));
+        assertThat(this.mem.toString(), is("Figure not found!" + System.lineSeparator()));
     }
 
     @Test
@@ -135,7 +135,7 @@ public class ChessTest {
         Cell source = king.position();
         Cell dest = Cell.H7;
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Figure not found!\r\n"));
+        assertThat(this.mem.toString(), is("Figure not found!" + System.lineSeparator()));
     }
 
     @Test
@@ -145,7 +145,7 @@ public class ChessTest {
         Cell source = knight.position();
         Cell dest = Cell.H7;
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Figure not found!\r\n"));
+        assertThat(this.mem.toString(), is("Figure not found!" + System.lineSeparator()));
     }
 
     @Test(expected = ImposibleMoveException.class)
@@ -347,7 +347,7 @@ public class ChessTest {
         Cell dest = Cell.A6;
         pawn.way(source, dest);
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Busy way!\r\n"));
+        assertThat(this.mem.toString(), is("Busy way!" + System.lineSeparator()));
     }
 
     @Test
@@ -361,7 +361,7 @@ public class ChessTest {
         Cell dest = Cell.H7;
         rook.way(source, dest);
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Busy way!\r\n"));
+        assertThat(this.mem.toString(), is("Busy way!" + System.lineSeparator()));
     }
 
     @Test
@@ -403,7 +403,7 @@ public class ChessTest {
         Cell dest = Cell.E6;
         bishop.way(source, dest);
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Busy way!\r\n"));
+        assertThat(this.mem.toString(), is("Busy way!" + System.lineSeparator()));
     }
 
 
@@ -444,7 +444,7 @@ public class ChessTest {
         Cell dest = Cell.F6;
         queen.way(source, dest);
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Busy way!\r\n"));
+        assertThat(this.mem.toString(), is("Busy way!" + System.lineSeparator()));
     }
 
     @Test
@@ -458,7 +458,7 @@ public class ChessTest {
         Cell dest = Cell.E7;
         king.way(source, dest);
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Busy way!\r\n"));
+        assertThat(this.mem.toString(), is("Busy way!" + System.lineSeparator()));
     }
 
 
@@ -473,7 +473,7 @@ public class ChessTest {
         Cell dest = Cell.C6;
         knight.way(source, dest);
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Busy way!\r\n"));
+        assertThat(this.mem.toString(), is("Busy way!" + System.lineSeparator()));
     }
 
     @Test
@@ -487,7 +487,7 @@ public class ChessTest {
         Cell dest = Cell.A3;
         pawn.way(source, dest);
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Busy way!\r\n"));
+        assertThat(this.mem.toString(), is("Busy way!" + System.lineSeparator()));
     }
 
     @Test
@@ -529,7 +529,7 @@ public class ChessTest {
         Cell dest = Cell.A3;
         bishop.way(source, dest);
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Busy way!\r\n"));
+        assertThat(this.mem.toString(), is("Busy way!" + System.lineSeparator()));
     }
 
     @Test
@@ -543,7 +543,7 @@ public class ChessTest {
         Cell dest = Cell.A2;
         rook.way(source, dest);
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Busy way!\r\n"));
+        assertThat(this.mem.toString(), is("Busy way!" + System.lineSeparator()));
     }
 
     @Test
@@ -587,7 +587,7 @@ public class ChessTest {
         Cell dest = Cell.D3;
         queen.way(source, dest);
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Busy way!\r\n"));
+        assertThat(this.mem.toString(), is("Busy way!" + System.lineSeparator()));
     }
 
     @Test
@@ -601,7 +601,7 @@ public class ChessTest {
         Cell dest = Cell.D1;
         king.way(source, dest);
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Busy way!\r\n"));
+        assertThat(this.mem.toString(), is("Busy way!" + System.lineSeparator()));
     }
 
     @Test
@@ -615,6 +615,6 @@ public class ChessTest {
         Cell dest = Cell.D2;
         knight.way(source, dest);
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Busy way!\r\n"));
+        assertThat(this.mem.toString(), is("Busy way!" + System.lineSeparator()));
     }
 }
