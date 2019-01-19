@@ -35,7 +35,7 @@ public class ChessTest {
         Cell source = pawn.position();
         Cell dest = Cell.B1;
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Figure not found!\r\n"));
+        assertThat(this.mem.toString(), is("Figure not found!" + System.lineSeparator() ));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class ChessTest {
         Cell source = bishop.position();
         Cell dest = Cell.E6;
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Figure not found!\r\n"));
+        assertThat(this.mem.toString(), is("Figure not found!"  + System.lineSeparator()));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class ChessTest {
         Cell source = rook.position();
         Cell dest = Cell.H7;
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Figure not found!\r\n"));
+        assertThat(this.mem.toString(), is("Figure not found!" + System.lineSeparator()));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class ChessTest {
         Cell source = queen.position();
         Cell dest = Cell.H7;
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Figure not found!\r\n"));
+        assertThat(this.mem.toString(), is("Figure not found!" + System.lineSeparator()));
     }
 
     @Test
