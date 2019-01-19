@@ -35,7 +35,7 @@ public class ChessTest {
         Cell source = pawn.position();
         Cell dest = Cell.B1;
         logic.move(source, dest);
-        assertThat(this.mem.toString(), is("Figure not found!" + System.lineSeparator() ));
+        assertThat(this.mem.toString(), is("Figure not found!" + System.lineSeparator()));
     }
 
     @Test
