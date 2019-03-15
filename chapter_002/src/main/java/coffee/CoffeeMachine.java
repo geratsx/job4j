@@ -25,11 +25,11 @@ public class CoffeeMachine {
     int[] coinsSort = new int[]{TEN, FIVE, TWO, ONE};
 
     /**
-     * Метод реализует работу кофе машину.
+     * Метод реализует работу кофе машины.
      *
      * @param value Номинал купюры, которую вставил клиент.
      * @param price - Цена кофе.
-     * @throws SmallBillException Если цена выше, вставленной купюры.
+     * @throws SmallBillException Если цена выше, номинала вставленной купюры.
      * @return Возвращает массив монет сдачи. Количество монет в сдаче минимально.
      */
     public int[] changes(int value, int price) {
