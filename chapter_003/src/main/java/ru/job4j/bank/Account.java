@@ -38,14 +38,18 @@ public class Account {
 
 
     /**
-     * Метод проверяет достаточно ли денег на счете для осуществления перевода.
+     * Метод проверяет достаточно ли денег на счете для осуществления перевода
+     * и осуществляет перевод.
      *
+     * @param destAccount Счет на который нужно перевести деньги
      * @param transferAmount Сумма, которую отправитель хочет перевести.
-     * @return true, если для перевода достаточно денег, в противном случае false.
+     * @return true, если для перевод денег произведен, в противном случае false.
      */
-    public boolean haveMoney(double transferAmount) {
+    public boolean refillAccount(Account destAccount, double transferAmount) {
         boolean success = false;
-        if (this.value >= transferAmount) {
+        if (destAccount != null && this.value >= transferAmount) {
+            this.value -= transferAmount;
+            destAccount.value += transferAmount;
             success = true;
         }
         return success;

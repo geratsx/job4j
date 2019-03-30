@@ -1,12 +1,8 @@
 package ru.job4j.bank;
 
 import org.junit.Test;
-import ru.job4j.bank.Account;
-import ru.job4j.bank.Bank;
-import ru.job4j.bank.User;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -186,14 +182,16 @@ public class BankTest {
 
     @Test
     public void whenHaveMoneyThenSuccsess() {
-        Account account = new Account(500, "12345");
-        assertTrue(account.haveMoney(100));
+        Account account1 = new Account(500, "12345");
+        Account account2 = new Account(500, "12345");
+        assertTrue(account1.refillAccount(account2, 100));
     }
 
     @Test
     public void whenNoMoneyThenUnsuccsess() {
-        Account account = new Account(500, "12345");
-        assertFalse(account.haveMoney(1000));
+        Account account1 = new Account(500, "12345");
+        Account account2 = new Account(500, "12345");
+        assertFalse(account1.refillAccount(account2, 1000));
     }
 
 

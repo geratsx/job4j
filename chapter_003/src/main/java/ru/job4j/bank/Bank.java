@@ -113,7 +113,7 @@ public class Bank {
      * Перевод может быть не успешен если:
      * 1) Не существует хотя бы одного из клиентов. Для этого проверяем результат вызова {@link Bank#getUser(String)} с помощью  {@link Optional#isPresent()}.
      * 2) Не существует хотя бы одного из счетов, между которыми переводятся деньги. Для этого проверяем результат вызова {@link Bank#getAccountByRequesites(String)} с помощью  {@link Optional#isPresent()}.
-     * 3) На счете отправителя не достаточно денег {@link Account#haveMoney(double)}.
+     * 3) На счете отправителя не достаточно денег {@link Account#refillAccount(Account, double)}.
      *
      * @param srcPassport    Паспортные данные клиента, со счета которого нужно перевести деньги.
      * @param srcRequesites  Реквизиты счета, с которого нужно перевести деньги.
@@ -124,18 +124,10 @@ public class Bank {
      */
     public boolean transferMoney(String srcPassport, String srcRequesites, String destPassport, String destRequesites, double amount) {
         boolean success = false;
-        Optional<User> srcUserCandidate = getUser(srcPassport);
-        Optional<User> destUserCandidate = getUser(destPassport);
-        if (srcUserCandidate.isPresent() && destUserCandidate.isPresent()) {
-            Optional<Account> srcAccountCandidate = getAccountByPassportAndRequesites(srcPassport, srcRequesites);
-            Optional<Account> destAccountCandidate = getAccountByPassportAndRequesites(destPassport, destRequesites);
+        Optional<Account> srcAccountCandidate = getAccountByPassportAndRequesites(srcPassport, srcRequesites);
+        Optional<Account> destAccountCandidate = getAccountByPassportAndRequesites(destPassport, destRequesites);
             if (srcAccountCandidate.isPresent() && destAccountCandidate.isPresent()) {
-                if (srcAccountCandidate.get().haveMoney(amount)) {
-                    srcAccountCandidate.get().setValue(srcAccountCandidate.get().getValue() - amount);
-                    destAccountCandidate.get().setValue(destAccountCandidate.get().getValue() + amount);
-                    success = true;
-                }
-            }
+                    success = srcAccountCandidate.get().refillAccount(destAccountCandidate.get(), amount);
         }
         return success;
     }
