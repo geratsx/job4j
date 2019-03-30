@@ -8,6 +8,7 @@ import ru.job4j.bank.User;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -185,13 +186,36 @@ public class BankTest {
 
     @Test
     public void whenHaveMoneyThenSuccsess() {
-        Bank bank = new Bank();
-        assertTrue(bank.haveMoney(1000, 500));
+        Account account = new Account(500, "12345");
+        assertTrue(account.haveMoney(100));
     }
 
     @Test
     public void whenNoMoneyThenUnsuccsess() {
-        Bank bank = new Bank();
-        assertFalse(bank.haveMoney(1000, 5000));
+        Account account = new Account(500, "12345");
+        assertFalse(account.haveMoney(1000));
     }
+
+
+    @Test
+    public void whenHavePassportAndRequesitesThenGetAccount() {
+        Bank bank = new Bank();
+        User user = new User("Vasya", "12345");
+        Account account = new Account(100, "408107");
+        bank.addUser(user);
+        bank.addAccountToUser(user.getPassport(), account);
+        Optional<Account> result = bank.getAccountByPassportAndRequesites(user.getPassport(), account.getRequesites());
+        assertTrue(result.isPresent());
+    }
+
+    @Test
+    public void whenHavePassportAndRequesitesAndNoUserThenNoAccount() {
+        Bank bank = new Bank();
+        User user = new User("Vasya", "12345");
+        Account account = new Account(100, "408107");
+        bank.addAccountToUser(user.getPassport(), account);
+        Optional<Account> result = bank.getAccountByPassportAndRequesites(user.getPassport(), account.getRequesites());
+        assertFalse(result.isPresent());
+    }
+
 }

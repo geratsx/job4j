@@ -10,11 +10,11 @@ package ru.job4j.bank;
 public class Account {
 
     /**
-     Сумма на счете
+     * Сумма на счете
      */
     private double value;
     /**
-     Номер счета
+     * Номер счета
      */
     private String requesites;
 
@@ -36,7 +36,18 @@ public class Account {
         return requesites;
     }
 
-    public void setRequesites(String requesites) {
-        this.requesites = requesites;
+
+    /**
+     * Метод проверяет достаточно ли денег на счете для осуществления перевода.
+     *
+     * @param transferAmount Сумма, которую отправитель хочет перевести.
+     * @return true, если для перевода достаточно денег, в противном случае false.
+     */
+    public boolean haveMoney(double transferAmount) {
+        boolean success = false;
+        if (this.value >= transferAmount) {
+            success = true;
+        }
+        return success;
     }
 }

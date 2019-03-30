@@ -73,10 +73,12 @@ public class Bank {
     public boolean deleteAccountFromUser(String passport, Account account) {
         boolean result = false;
         Optional<User> userCandidate = getUser(passport);
-        Optional<Account> accountCandidate = getAccountByRequesites(account.getRequesites());
-        if (userCandidate.isPresent() && accountCandidate.isPresent()) {
-            accounts.get(userCandidate.get()).remove(account);
-            result = true;
+        if (userCandidate.isPresent()) {
+            Optional<Account> accountCandidate = getAccountByRequesites(account.getRequesites());
+            if (accountCandidate.isPresent()) {
+                accounts.get(userCandidate.get()).remove(account);
+                result = true;
+            }
         }
         return result;
     }
@@ -111,7 +113,7 @@ public class Bank {
      * Перевод может быть не успешен если:
      * 1) Не существует хотя бы одного из клиентов. Для этого проверяем результат вызова {@link Bank#getUser(String)} с помощью  {@link Optional#isPresent()}.
      * 2) Не существует хотя бы одного из счетов, между которыми переводятся деньги. Для этого проверяем результат вызова {@link Bank#getAccountByRequesites(String)} с помощью  {@link Optional#isPresent()}.
-     * 3) На счете отправителя не достаточно денег {@link Bank#haveMoney(double, double)}.
+     * 3) На счете отправителя не достаточно денег {@link Account#haveMoney(double)}.
      *
      * @param srcPassport    Паспортные данные клиента, со счета которого нужно перевести деньги.
      * @param srcRequesites  Реквизиты счета, с которого нужно перевести деньги.
@@ -124,16 +126,34 @@ public class Bank {
         boolean success = false;
         Optional<User> srcUserCandidate = getUser(srcPassport);
         Optional<User> destUserCandidate = getUser(destPassport);
-        Optional<Account> srcAccountCandidate = getAccountByRequesites(srcRequesites);
-        Optional<Account> destAccountCandidate = getAccountByRequesites(destRequesites);
-        if (srcUserCandidate.isPresent() && destUserCandidate.isPresent() && srcAccountCandidate.isPresent() && destAccountCandidate.isPresent()) {
-            if (haveMoney(srcAccountCandidate.get().getValue(), amount)) {
-                srcAccountCandidate.get().setValue(srcAccountCandidate.get().getValue() - amount);
-                destAccountCandidate.get().setValue(destAccountCandidate.get().getValue() + amount);
-                success = true;
+        if (srcUserCandidate.isPresent() && destUserCandidate.isPresent()) {
+            Optional<Account> srcAccountCandidate = getAccountByPassportAndRequesites(srcPassport, srcRequesites);
+            Optional<Account> destAccountCandidate = getAccountByPassportAndRequesites(destPassport, destRequesites);
+            if (srcAccountCandidate.isPresent() && destAccountCandidate.isPresent()) {
+                if (srcAccountCandidate.get().haveMoney(amount)) {
+                    srcAccountCandidate.get().setValue(srcAccountCandidate.get().getValue() - amount);
+                    destAccountCandidate.get().setValue(destAccountCandidate.get().getValue() + amount);
+                    success = true;
+                }
             }
         }
         return success;
+    }
+
+    /**
+     * Метод реализует получение счета клиента по паспорту клиента и реквизитам.
+     *
+     * @param passport   Паспортные данные клиента, счет которого нужно получить.
+     * @param requesites Реквизиты счета, который нужно получить.
+     * @return Optional<Account>. Если аккаунта нет, возвращает пустой объект.
+     */
+    public Optional<Account> getAccountByPassportAndRequesites(String passport, String requesites) {
+        Optional<Account> account = Optional.empty();
+        Optional<User> user = getUser(passport);
+        if (user.isPresent()) {
+            account = getAccountByRequesites(requesites);
+        }
+        return account;
     }
 
     /**
@@ -146,21 +166,5 @@ public class Bank {
 
     public Optional<Account> getAccountByRequesites(String requesites) {
         return accounts.values().stream().flatMap(Collection::stream).filter(account -> account.getRequesites().equals(requesites)).findFirst();
-    }
-
-
-    /**
-     * Метод проверяет достаточно ли денег на счете для осуществления перевода.
-     *
-     * @param amount         Сумма на счете отправителя.
-     * @param transferAmount Сумма, которую отправитель хочет перевести.
-     * @return true, если для перевода достаточно денег, в противном случае false.
-     */
-    public boolean haveMoney(double amount, double transferAmount) {
-        boolean success = false;
-        if (amount >= transferAmount) {
-            success = true;
-        }
-        return success;
     }
 }
