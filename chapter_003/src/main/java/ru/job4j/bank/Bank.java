@@ -1,9 +1,6 @@
 package ru.job4j.bank;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
@@ -20,137 +17,150 @@ public class Bank {
      */
     private Map<User, List<Account>> accounts = new HashMap<>();
 
+    public Map<User, List<Account>> getAccounts() {
+        return accounts;
+    }
+
     /**
-     * Метод реализует добавление нового пользователя.
+     * Метод реализует добавление нового клиента.
      *
      * @param user Новый пользователь, которого нужно добавить.
      */
     public void addUser(User user) {
-        List<Account> users = new ArrayList<>();
-        accounts.putIfAbsent(user, users);
+        List<Account> accountList = new ArrayList<>();
+        accounts.putIfAbsent(user, accountList);
     }
 
     /**
-     * Метод реализует удаление пользователя.
+     * Метод реализует удаление клиента,
+     * если такой клиент есть {@link Bank#getUser(String)}.
      *
-     * @param user Пользователь, которого нужно удалить.
+     * @param user Клиент, которого нужно удалить.
+     * @return true, если клиент удален, в противном случае возвращает false.
      */
-    public void deleteUser(User user) {
-        accounts.remove(user);
+    public boolean deleteUser(User user) {
+        boolean result = getUser(user.getPassport()).isPresent();
+        if (result) {
+            accounts.remove(user);
+        }
+        return result;
     }
 
     /**
-     * Метод реализует добавление нового счета пользователю.
+     * Метод реализует добавление нового счета клиенту.
      *
-     * @param account  Новый счет, который нужно добавить.
      * @param passport Паспортные данные клиента, которому нужно добавить счет.
+     * @param account  Новый счет, который нужно добавить.
+     * @return true, если такой клиент есть и счет успешно добавлен, в противном случае возвращает false {@link Bank#getUser(String)}.
      */
-    public void addAccountToUser(String passport, Account account) {
-        accounts.get(getUser(passport)).add(account);
+    public boolean addAccountToUser(String passport, Account account) {
+        boolean result = false;
+        Optional<User> user = getUser(passport);
+        if (user.isPresent()) {
+            accounts.get(user.get()).add(account);
+            result = true;
+        }
+        return result;
     }
 
     /**
-     * Метод реализует удаление счета пользователя.
+     * Метод реализует удаление счета клиента.
      *
+     * @param passport Паспортные данные клиента, счет которого нужно удалить.
      * @param account  Счет, который нужно удалить.
-     * @param passport Паспортные данные клиента, которому нужно удалить счет.
+     * @return true, если такой клиент есть и счет успешно удален, в противном случае возвращает false {@link Bank#getUser(String)}.
      */
-    public void deleteAccountFromUser(String passport, Account account) {
-        accounts.get(getUser(passport)).remove(account);
+    public boolean deleteAccountFromUser(String passport, Account account) {
+        boolean result = false;
+        Optional<User> userCandidate = getUser(passport);
+        Optional<Account> accountCandidate = getAccountByRequesites(account.getRequesites());
+        if (userCandidate.isPresent() && accountCandidate.isPresent()) {
+            accounts.get(userCandidate.get()).remove(account);
+            result = true;
+        }
+        return result;
     }
 
     /**
      * Метод реализует получение всех счетов пользователя по паспортным данным.
      *
      * @param passport Паспортные данные клиента, счета которого нужно получить.
-     * @return Возвращает лист счетов клиента
+     * @return Возвращает лист счетов клиента. Если такого пользователя нет {@link Bank#getUser(String)}, то вернет пустую лист.
      */
     public List<Account> getUserAccounts(String passport) {
-        return accounts.get(this.getUser(passport));
-    }
-
-    /**
-     * Метод реализует получение пользователя по паспортным данным.
-     *
-     * @param passport Паспортные данные клиента.
-     * @return Возвращает найденногог клиента.
-     */
-    public User getUser(String passport) {
-        User result = new User();
-        for (Map.Entry<User, List<Account>> entry : accounts.entrySet()) {
-            User user = entry.getKey();
-            if (user.getPassport().equals(passport)) {
-                result = user;
-                break;
-            }
+        List<Account> result = new ArrayList<>();
+        Optional<User> user = getUser(passport);
+        if (user.isPresent()) {
+            result = accounts.get(user.get());
         }
         return result;
     }
 
     /**
-     * Метод реализует получение счета клиента клиента из коллекции по индексу.
+     * Метод реализует получение клиента по паспортным данным.
      *
-     * @param user  Клиент, счет которого нужно получить.
-     * @param index Индекс счета в коллекции.
-     * @return Счет клиента.
-     * @throws ArrayIndexOutOfBoundsException в случае, если в коллекции нет такого индекса.
+     * @param passport Паспортные данные клиента.
+     * @return Возвращает Optional<User>. При использовании результата вызова метода нужно проверить, что в Optional<User> есть клиент - {@link Optional#isPresent()}.
      */
-    public Account getAccountByUserFromAccountList(User user, int index) throws ArrayIndexOutOfBoundsException {
-        return this.accounts.get(user).get(index);
+    public Optional<User> getUser(String passport) {
+        return accounts.entrySet().stream().map(Map.Entry::getKey).filter(user -> user.getPassport().equals(passport)).findFirst();
     }
 
     /**
      * Метод реализует перевод денег между счетами.
-     * Перевод может быть не успешен если на счете списания недостаточно денег, или у пользователя нет такого счета(если индекс счета в коллекции = -1). {@link Bank#getAccountIndexByRequesites}
+     * Перевод может быть не успешен если:
+     * 1) Не существует хотя бы одного из клиентов. Для этого проверяем результат вызова {@link Bank#getUser(String)} с помощью  {@link Optional#isPresent()}.
+     * 2) Не существует хотя бы одного из счетов, между которыми переводятся деньги. Для этого проверяем результат вызова {@link Bank#getAccountByRequesites(String)} с помощью  {@link Optional#isPresent()}.
+     * 3) На счете отправителя не достаточно денег {@link Bank#haveMoney(double, double)}.
      *
      * @param srcPassport    Паспортные данные клиента, со счета которого нужно перевести деньги.
      * @param srcRequesites  Реквизиты счета, с которого нужно перевести деньги.
      * @param destPassport   Паспортные данные клиента, на счет которого нужно перевести деньги.
      * @param destRequesites Реквизиты счета, на который нужно перевести деньги.
      * @param amount         Сумма денег, которую нужног перевести.
-     * @return True, если перевод успешен и false, если перевод не успешен.
+     * @return true, если перевод успешен, в противном случае вренет false.
      */
     public boolean transferMoney(String srcPassport, String srcRequesites, String destPassport, String destRequesites, double amount) {
-        boolean success = true;
-        User srcUser = getUser(srcPassport);
-        User destUser = getUser(destPassport);
-        int srcAccountIndex = getAccountIndexByRequesites(srcRequesites);
-        int destAccountIndex = getAccountIndexByRequesites(destRequesites);
-        try {
-            Account srcAccount = getAccountByUserFromAccountList(srcUser, srcAccountIndex);
-            if (srcAccountIndex >= 0 && destAccountIndex >= 0 && srcAccount.getValue() >= amount) {
-                Account destAccount = getAccountByUserFromAccountList(destUser, destAccountIndex);
-                srcAccount.setValue(srcAccount.getValue() - amount);
-                destAccount.setValue(destAccount.getValue() + amount);
-            } else {
-                success = false;
+        boolean success = false;
+        Optional<User> srcUserCandidate = getUser(srcPassport);
+        Optional<User> destUserCandidate = getUser(destPassport);
+        Optional<Account> srcAccountCandidate = getAccountByRequesites(srcRequesites);
+        Optional<Account> destAccountCandidate = getAccountByRequesites(destRequesites);
+        if (srcUserCandidate.isPresent() && destUserCandidate.isPresent() && srcAccountCandidate.isPresent() && destAccountCandidate.isPresent()) {
+            if (haveMoney(srcAccountCandidate.get().getValue(), amount)) {
+                srcAccountCandidate.get().setValue(srcAccountCandidate.get().getValue() - amount);
+                destAccountCandidate.get().setValue(destAccountCandidate.get().getValue() + amount);
+                success = true;
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            success = false;
         }
         return success;
     }
 
     /**
-     * Метод реализует получение индекса, под которым в коллекции лежит счет клиента, по реквизитам счета.
+     * Метод реализует получение клиента по паспортным данным.
      *
-     * @param requesites Реквизиты счета, индекс которого нужно получить.
-     * @return Индекс искомого счета в коллекции. Если такого счета у клиента нет - возвращает -1.
+     * @param requesites Реквизиты искомого счета.
+     * @return Возвращает найденный счет клиента в виде - Optional<Account>.
+     * При использовании результата вызова метода нужно проверить, что в Optional<Account> есть клиент - {@link Optional#isPresent()}
      */
-    public int getAccountIndexByRequesites(String requesites) {
-        int result = -1;
-        for (List<Account> list : accounts.values()) {
-            for (Account account : list) {
-                if (requesites.equals(account.getRequesites())) {
-                    result = list.lastIndexOf(account);
-                    break;
-                }
-            }
-        }
-        return result;
+
+    public Optional<Account> getAccountByRequesites(String requesites) {
+        return accounts.values().stream().flatMap(Collection::stream).filter(account -> account.getRequesites().equals(requesites)).findFirst();
     }
 
-    public Map<User, List<Account>> getAccounts() {
-        return accounts;
+
+    /**
+     * Метод проверяет достаточно ли денег на счете для осуществления перевода.
+     *
+     * @param amount         Сумма на счете отправителя.
+     * @param transferAmount Сумма, которую отправитель хочет перевести.
+     * @return true, если для перевода достаточно денег, в противном случае false.
+     */
+    public boolean haveMoney(double amount, double transferAmount) {
+        boolean success = false;
+        if (amount >= transferAmount) {
+            success = true;
+        }
+        return success;
     }
 }
