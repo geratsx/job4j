@@ -215,5 +215,4 @@ public class BankTest {
         Optional<Account> result = bank.getAccountByPassportAndRequesites(user.getPassport(), account.getRequesites());
         assertFalse(result.isPresent());
     }
-
 }
