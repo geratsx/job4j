@@ -2,6 +2,7 @@ package ru.job4j.tracker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
@@ -53,6 +54,8 @@ public class StartUI {
      */
     private boolean isExit = false;
 
+    private final Consumer<String> output;
+
     /**
      * Метод для установки флага для выхода из меню
      * @param isExit значение флага для выхода из меню
@@ -65,10 +68,12 @@ public class StartUI {
      * Конструктор, инициализирующий поля
      * @param input   Ввод данных
      * @param tracker Хранилище заявок
+     * @param output
      */
-    public StartUI(Input input, Tracker tracker) {
+    public StartUI(Input input, Tracker tracker, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
+        this.output = output;
     }
 
 
@@ -76,7 +81,7 @@ public class StartUI {
      * Метод реализующий обработку выбранных пунктов меню пока пользоватль н захочет выйти
      */
     public void init() {
-        MenuTracker menu = new MenuTracker(this.input, this.tracker, this);
+        MenuTracker menu = new MenuTracker(this.input, this.tracker, this, output);
         menu.fillActions();
         int rangeLength = menu.getActionsLength();
         List<Integer> range = new ArrayList<>(rangeLength);
@@ -93,6 +98,6 @@ public class StartUI {
 
 
     public static void main(String[] args) {
-        new StartUI(new ValidateInput(new ConsoleInput()), new Tracker()).init();
+        new StartUI(new ValidateInput(new ConsoleInput()), new Tracker(), System.out::println).init();
     }
 }

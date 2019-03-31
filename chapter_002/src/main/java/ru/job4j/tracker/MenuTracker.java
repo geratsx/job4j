@@ -2,6 +2,7 @@ package ru.job4j.tracker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Класс реализует меню с помощью внутренних классов - событий
@@ -25,16 +26,19 @@ public class MenuTracker {
      */
     private List<UserAction> actions = new ArrayList<>();
     private StartUI startUI;
+    private final Consumer<String> output;
 
 
-    public MenuTracker(Input input, Tracker tracker, StartUI startUI) {
+    public MenuTracker(Input input, Tracker tracker, StartUI startUI, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
         this.startUI = startUI;
+        this.output = output;
     }
 
     /**
      * Метод для получения размера списка меню
+     *
      * @return размер списка меню
      */
     public int getActionsLength() {
@@ -57,6 +61,7 @@ public class MenuTracker {
 
     /**
      * Метод реализует логику выбора пункта меню пользователем
+     *
      * @param key ключ под которым лежит событие в листе
      */
     public void select(int key) {
@@ -69,17 +74,17 @@ public class MenuTracker {
     public void show() {
         for (UserAction action : this.actions) {
             if (action != null) {
-                System.out.println(action.info());
+                output.accept(action.info());
             }
         }
     }
 
     /**
      * Класс реализует событие добавления новой заявки в трекер
-     * @see UserAction
      *
      * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
      * @version $Id$
+     * @see UserAction
      * @since 0.1
      */
     public class AddItem extends BaseAction {
@@ -91,26 +96,27 @@ public class MenuTracker {
         /**
          * Метод реализует логику пункта меню  с помощью {@link Tracker#add(Item)}
          * и печатает в консоль данные добавленной заявки
-         * @param input ввод данных
+         *
+         * @param input   ввод данных
          * @param tracker трекер заявок
          */
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("---------------Adding a new item-----------------");
+            output.accept("---------------Adding a new item-----------------");
             String name = input.ask("Enter items name:");
             String desc = input.ask("Enter items description:");
             Item item = new Item(name, desc);
             tracker.add(item);
-            System.out.println("New item added with id = " + item.getId() + ", name = " + item.getName() + ", desc = " + item.getDesc());
+            output.accept(String.format("New item added with id = %s, name = %s, desc = %s", item.getId(), item.getName(), item.getDesc()));
         }
     }
 
     /**
      * Класс реализует показ всех заявок в трекере
-     * @see UserAction
      *
      * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
      * @version $Id$
+     * @see UserAction
      * @since 0.1
      */
     private class ShowItems extends BaseAction {
@@ -122,32 +128,33 @@ public class MenuTracker {
         /**
          * Метод реализует логику пункта меню с помощью {@link Tracker#findAll()}
          * и печатает в консоль список всех заявок
-         * @param input ввод данных
+         *
+         * @param input   ввод данных
          * @param tracker трекер заявок
          */
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("List of all items: ");
-            System.out.println();
+            output.accept("List of all items: ");
+            output.accept("");
             List<Item> allItems = tracker.findAll();
             if (allItems.size() > 0) {
                 for (Item item : allItems) {
-                    System.out.println(item.toString());
-                    System.out.println();
+                    output.accept(item.toString());
+                    output.accept("");
                 }
             } else {
-                System.out.println("No items in the tracker");
-                System.out.println();
+                output.accept("No items in the tracker");
+                output.accept("");
             }
         }
     }
 
     /**
      * Класс реализует редактирование заявки в трекере
-     * @see UserAction
      *
      * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
      * @version $Id$
+     * @see UserAction
      * @since 0.1
      */
     private static class EditItem extends BaseAction {
@@ -159,7 +166,8 @@ public class MenuTracker {
         /**
          * Метод реализует логику пункта меню с помощью {@link Tracker#replace(String, Item)}
          * и печатает в консоль измененную заявку
-         * @param input ввод данных
+         *
+         * @param input   ввод данных
          * @param tracker трекер заявок
          */
         @Override
@@ -181,10 +189,10 @@ public class MenuTracker {
 
     /**
      * Класс реализует удаление заявки из трекера
-     * @see UserAction
      *
      * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
      * @version $Id$
+     * @see UserAction
      * @since 0.1
      */
     private static class DeleteItem extends BaseAction {
@@ -196,7 +204,8 @@ public class MenuTracker {
         /**
          * Метод реализует логику пункта меню с помощью {@link Tracker#delete(String)}
          * и печатает в консоль id удаленной заявки
-         * @param input ввод данных
+         *
+         * @param input   ввод данных
          * @param tracker трекер заявок
          */
         @Override
@@ -213,14 +222,13 @@ public class MenuTracker {
 
     /**
      * Класс реализует поиск заявки в трекере по id
-     * @see UserAction
      *
      * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
      * @version $Id$
+     * @see UserAction
      * @since 0.1
      */
     private class FindItemById extends BaseAction {
-
 
         public FindItemById(int key, String name) {
             super(key, name);
@@ -229,27 +237,29 @@ public class MenuTracker {
         /**
          * Метод реализует логику пункта меню с помощью {@link Tracker#findById(String)}
          * и печатает в консоль найденную заявку
-         * @param input ввод данных
+         *
+         * @param input   ввод данных
          * @param tracker трекер заявок
          */
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("-----------------Find item by Id-----------------");
+            output.accept("-----------------Find item by Id-----------------");
             String id = input.ask("Enter items id for searching: ");
             Item item = tracker.findById(id);
             if (item != null) {
-                System.out.println(item.toString());
+                output.accept(item.toString());
             } else {
-                System.out.println("Item not found");
+                output.accept("Item not found");
             }
         }
     }
+
     /**
      * Класс реализует поиск заявки в трекере по имени
-     * @see UserAction
      *
      * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
      * @version $Id$
+     * @see UserAction
      * @since 0.1
      */
     private class FindItemByName extends BaseAction {
@@ -261,30 +271,32 @@ public class MenuTracker {
         /**
          * Метод реализует логику пункта меню с помощью {@link Tracker#findByName(String)}
          * и печатает в консоль найденную заявку
-         * @param input ввод данных
+         *
+         * @param input   ввод данных
          * @param tracker трекер заявок
          */
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("-----------------Find item by name-----------------");
+            output.accept("-----------------Find item by name-----------------");
             String name = input.ask("Enter items name for searching: ");
             List<Item> items = tracker.findByName(name);
             if (items.size() > 0) {
                 for (Item item : items) {
-                    System.out.println(item.toString());
-                    System.out.println();
+                    output.accept(item.toString());
+                    output.accept("");
                 }
             } else {
-                System.out.println("Item not found");
+                output.accept("Item not found");
             }
         }
     }
+
     /**
      * Класс реализует выход из трекера
-     * @see UserAction
      *
      * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
      * @version $Id$
+     * @see UserAction
      * @since 0.1
      */
     private class ExitProgram extends BaseAction {
@@ -295,7 +307,8 @@ public class MenuTracker {
 
         /**
          * Метод реализует выход из меню {@link StartUI#init()}
-         * @param input ввод данных
+         *
+         * @param input   ввод данных
          * @param tracker трекер заявок
          */
         @Override
