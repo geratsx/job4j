@@ -1,7 +1,13 @@
 package ru.job4j.school;
 
 import java.util.Objects;
-
+/**
+ * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
+ * @version $Id$
+ * @since 0.1
+ * <p>
+ * Класс представляет собой сущность студент.
+ **/
 public class Student {
 
     private int score;
