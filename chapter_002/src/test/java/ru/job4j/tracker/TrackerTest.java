@@ -37,7 +37,7 @@ public class TrackerTest {
 
     @Test
     public void whenThereIsIdThenFindItInTheTrackerStaticLazy() {
-        TrackerStaticLazy tracker =  TrackerStaticLazy.getInstance();
+        TrackerStaticLazy tracker = TrackerStaticLazy.getInstance();
         Item newItem = new Item("test name", "test");
         tracker.add(newItem);
         assertThat(tracker.findById(newItem.getId()), is(newItem));
@@ -45,7 +45,7 @@ public class TrackerTest {
 
     @Test
     public void whenThereIsIdThenFindItInTheTrackerStaticEager() {
-        TrackerStaticEager tracker =  TrackerStaticEager.getInstance();
+        TrackerStaticEager tracker = TrackerStaticEager.getInstance();
         Item newItem = new Item("test name", "test");
         tracker.add(newItem);
         assertThat(tracker.findById(newItem.getId()), is(newItem));
@@ -63,7 +63,7 @@ public class TrackerTest {
     @Test
     public void whenThereIsNameThenFindItInTheTracker() {
         Tracker tracker = new Tracker();
-        Item newItem = new Item("test name",  "test");
+        Item newItem = new Item("test name", "test");
         tracker.add(newItem);
         List<Item> items = Arrays.asList(newItem);
         assertThat(tracker.findByName(newItem.getName()), is(items));
@@ -104,14 +104,14 @@ public class TrackerTest {
     }
 
 
-   @Test
+    @Test
     public void whenGiveIdAndDeleteThenOldItemNotInTracker() {
-       Tracker tracker = new Tracker();
-       Item previos = new Item("test name", "previos");
-       tracker.add(previos);
-       tracker.delete(previos.getId());
-       assertFalse(Arrays.asList(tracker.findAll()).contains(previos));
-   }
+        Tracker tracker = new Tracker();
+        Item previos = new Item("test name", "previos");
+        tracker.add(previos);
+        tracker.delete(previos.getId());
+        assertFalse(Arrays.asList(tracker.findAll()).contains(previos));
+    }
 
     @Test
     public void whenDeleteItemButTrackerDoesNotHaveThisItemThenFalse() {
@@ -134,7 +134,7 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         Item previos = new Item("test name", "previos");
         tracker.add(previos);
-        Item next = new Item("test name2", "previos",  "111");
+        Item next = new Item("test name2", "previos", "111");
         assertFalse(tracker.replace("111", next));
     }
 
@@ -145,5 +145,33 @@ public class TrackerTest {
         Item next = new Item("test name2", "previos", "111");
         tracker.add(previos);
         assertTrue(tracker.replace(previos.getId(), next));
+    }
+
+    @Test
+    public void whenCreateTrackerInnerThenItSingleton() {
+        TrackerInner tracker1 = TrackerInner.getInstance();
+        TrackerInner tracker2 = TrackerInner.getInstance();
+        assertThat(tracker1, is(tracker2));
+    }
+
+    @Test
+    public void whenCreateTrackerStaticEagerThenItSingleton() {
+        TrackerStaticEager tracker1 = TrackerStaticEager.getInstance();
+        TrackerStaticEager tracker2 = TrackerStaticEager.getInstance();
+        assertThat(tracker1, is(tracker2));
+    }
+
+    @Test
+    public void whenCreateTrackerStaticLazyThenItSingleton() {
+        TrackerStaticLazy tracker1 = TrackerStaticLazy.getInstance();
+        TrackerStaticLazy tracker2 = TrackerStaticLazy.getInstance();
+        assertThat(tracker1, is(tracker2));
+    }
+
+    @Test
+    public void whenCreateTrackerEnumThenItSingleton() {
+        TrackerEnum tracker1 = TrackerEnum.INSTANCE;
+        TrackerEnum tracker2 = TrackerEnum.INSTANCE;
+        assertThat(tracker1, is(tracker2));
     }
 }
