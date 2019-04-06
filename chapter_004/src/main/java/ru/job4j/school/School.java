@@ -1,6 +1,7 @@
 package ru.job4j.school;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,16 @@ public class School {
      **/
     public List<Student> collect(List<Student> students, Predicate<Student> predicate) {
         return students.stream().filter(predicate).collect(Collectors.toList());
+    }
+
+
+    /**
+     * Метод преврашает список учеников в map.
+     * @param students Список студентов.
+     * @return Map, где ключем является имя студента, а значением обьект студента.
+     **/
+    public Map<String, Student> getMapStudentsFromList(List<Student> students) {
+        return students.stream().distinct().collect(Collectors.toMap(Student::getName, student -> student));
     }
 }
 
