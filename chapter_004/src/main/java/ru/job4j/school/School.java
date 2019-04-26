@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Mikhail Gurfinkel (mailto:geraltsx@gmail.com)
@@ -34,5 +35,15 @@ public class School {
     public Map<String, Student> getMapStudentsFromList(List<Student> students) {
         return students.stream().distinct().collect(Collectors.toMap(Student::getName, student -> student));
     }
-}
 
+    /**
+     * Метод отбирает студентов, средний балл которых, выше определенного значения.
+     * Также отсекает значения null в коллекции студентов, если таковые есть.
+     * @param students Список студентов, из которых нужно сделать выборку.
+     * @param bound Величина балла, выше которой, должен быть балл аттестата студента.
+     * @return Лист студентов, балл атестата которых выше чем заданное значение.
+     **/
+    List<Student> levelOf(List<Student> students, int bound) {
+        return students.stream().flatMap(Stream::ofNullable).sorted((t1, t2) -> t1.compare(t1, t2)).takeWhile(x -> x.getScore() > bound).collect(Collectors.toList());
+    }
+}

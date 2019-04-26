@@ -1,8 +1,10 @@
 package ru.job4j.school;
 
+import java.util.Comparator;
 import java.util.Objects;
 
-public class Student {
+
+public class Student implements Comparator<Student> {
 
     private int score;
     private String name;
@@ -26,6 +28,22 @@ public class Student {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{"
+                + "score="
+                + score
+                + ", name='"
+                + name
+                + '\''
+                + '}';
+    }
+
+     @Override
+    public int compare(Student o1, Student o2) {
+        return o2.getScore() - o1.getScore();
     }
 
     @Override
