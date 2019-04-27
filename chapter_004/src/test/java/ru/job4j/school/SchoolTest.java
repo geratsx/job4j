@@ -50,4 +50,13 @@ public class SchoolTest {
         Map<String, Student> result = school.getMapStudentsFromList(students);
         assertThat(expect, is(result));
     }
+
+
+    @Test
+    public void whenHaveListStudntsThenGetStudentsWithScoreMoreThenBound() {
+        int bound = 30;
+        List<Student> expect = Arrays.asList(student3, student2);
+        List<Student> result = school.levelOf(students, bound);
+        assertThat(expect, is(result));
+    }
 }
