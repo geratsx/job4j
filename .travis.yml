@@ -1,4 +1,6 @@
 language: java
+
+jdk: openjdk11
 # используем режим обычного пользователя для сборки проекта.
 sudo: false
 
@@ -7,7 +9,6 @@ sudo: false
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 
-jdk: openjdk-11
 # Отправлять уведомление на почтуyouremail@smtp.ru(Изменить на свою) если сборка упала
 notifications:
   email:
