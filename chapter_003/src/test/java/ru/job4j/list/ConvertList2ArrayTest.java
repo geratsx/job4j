@@ -13,16 +13,8 @@ public class ConvertList2ArrayTest {
 
     @Test
     public void when7ElementsThen9() {
-        ConvertList2Array list = new ConvertList2Array();
-        ArrayList<Integer> resultList = new ArrayList<>();
-        resultList.add(1);
-        resultList.add(2);
-        resultList.add(3);
-        resultList.add(4);
-        resultList.add(5);
-        resultList.add(6);
-        resultList.add(7);
-        int[][] result = list.toArray(resultList, 3);
+        List<Integer> resultList = List.of(1, 2, 3, 4, 5, 6, 7);
+        int[][] result = new ConvertList2Array().toArray(resultList, 3);
         int[][] expect = {
                 {1, 2, 3},
                 {4, 5, 6},
@@ -33,18 +25,8 @@ public class ConvertList2ArrayTest {
 
     @Test
     public void when9ElementsThen3Arrays() {
-        ConvertList2Array list = new ConvertList2Array();
-        ArrayList<Integer> resultList = new ArrayList<>();
-        resultList.add(1);
-        resultList.add(2);
-        resultList.add(3);
-        resultList.add(4);
-        resultList.add(5);
-        resultList.add(6);
-        resultList.add(7);
-        resultList.add(8);
-        resultList.add(9);
-        int[][] result = list.toArray(resultList, 3);
+        List<Integer> resultList = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        int[][] result = new ConvertList2Array().toArray(resultList, 3);
         int[][] expect = {
                 {1, 2, 3},
                 {4, 5, 6},
@@ -55,18 +37,8 @@ public class ConvertList2ArrayTest {
 
     @Test
     public void when9ElementsThen1Array() {
-        ConvertList2Array list = new ConvertList2Array();
-        ArrayList<Integer> resultList = new ArrayList<>();
-        resultList.add(1);
-        resultList.add(2);
-        resultList.add(3);
-        resultList.add(4);
-        resultList.add(5);
-        resultList.add(6);
-        resultList.add(7);
-        resultList.add(8);
-        resultList.add(9);
-        int[][] result = list.toArray(resultList, 1);
+        List<Integer> resultList = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        int[][] result = new ConvertList2Array().toArray(resultList, 1);
         int[][] expect = {
                 {1, 2, 3, 4, 5, 6, 7, 8, 9}
         };
@@ -75,20 +47,12 @@ public class ConvertList2ArrayTest {
 
     @Test
     public void whenListOfArraysThenListOfElements() {
-        ConvertList2Array list = new ConvertList2Array();
-        ArrayList<int[]> input = new ArrayList<>();
-        int[] ar1 = {1, 2};
-        int[] ar2 = {3, 4, 5, 6};
-        input.add(ar1);
-        input.add(ar2);
-        List<Integer> result = list.convert(input);
-        List<Integer> expect = new ArrayList<>();
-        expect.add(1);
-        expect.add(2);
-        expect.add(3);
-        expect.add(4);
-        expect.add(5);
-        expect.add(6);
+        List<int[]> input = List.of(
+                new int[]{1, 2},
+                new int[]{3, 4, 5, 6}
+        );
+        List<Integer> result = new ConvertList2Array().convert(input);
+        List<Integer> expect = List.of(1, 2, 3, 4, 5, 6);
         assertThat(result, is(expect));
     }
 }

@@ -16,7 +16,6 @@ public class UserConverterTest {
 
     @Test
     public void whenHaveListOfUsersThenConvertItToMap() {
-        UserConvert converter = new UserConvert();
         User user1 = new User(1, "Vasya", "Moscow");
         User user2 = new User(2, "Petya", "Kazan");
         User user3 = new User(3, "Vitaliy", "Voronezh");
@@ -24,7 +23,7 @@ public class UserConverterTest {
         users.add(user1);
         users.add(user2);
         users.add(user3);
-        HashMap<Integer, User> input = converter.process(users);
+        HashMap<Integer, User> input =  new UserConvert().process(users);
         HashMap<Integer, User> expect = new HashMap<>();
         expect.put(1, user1);
         expect.put(2, user2);
