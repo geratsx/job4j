@@ -35,7 +35,7 @@ public class PhoneDictionary {
     public List<Person> find(String key) {
         String lowerKey = key.toLowerCase();
         List<Person> result = new ArrayList<>();
-        for (Person person : persons) {
+        for (var person : persons) {
             if (person.getName().toLowerCase().contains(lowerKey) || person.getSurname().toLowerCase().contains(lowerKey)
                     || person.getAdress().toLowerCase().contains(lowerKey) || person.getPhone().toLowerCase().contains(lowerKey)) {
                 result.add(person);
