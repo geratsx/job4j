@@ -1,45 +1,37 @@
 package ru.job4j.tracker;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import ru.job4j.tracker.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class StartUITest {
 
-    /**
-     * Поле содержит дефолтный вывод в консоль.
-     */
-    private final PrintStream stdout = System.out;
-    /**
-     * Буфер для результата.
-     */
+    private final Consumer<String> output = new Consumer<String>() {
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        private final PrintStream stdout = new PrintStream(out);
 
-    @Before
-    public void loadOutput() {
-        System.setOut(new PrintStream(this.out));
-    }
+        @Override
+        public void accept(String s) {
+            stdout.println(s);
+        }
 
-    @After
-    public void backOutput() {
-        System.setOut(this.stdout);
-    }
-
+        @Override
+        public String toString() {
+            return out.toString();
+        }
+    };
 
     /**
      * Меню трекера в виде строки
      */
     private final StringBuilder menu = new StringBuilder()
-            .append(System.lineSeparator())
             .append("0.Add new item")
             .append(System.lineSeparator())
             .append("1.Show all items")
@@ -53,7 +45,6 @@ public class StartUITest {
             .append("5.Find item by name")
             .append(System.lineSeparator())
             .append("6.Exit")
-            .append(System.lineSeparator())
             .append(System.lineSeparator());
 
     @Test
@@ -61,8 +52,8 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Item item1 = tracker.add(new Item("test name1", "desc1"));
         Input input = new StubInput(Arrays.asList("1", "6"));
-        new StartUI(input, tracker).init();
-        assertThat(new String(out.toByteArray()), is(
+        new StartUI(input, tracker, output).init();
+        assertThat(this.output.toString(), is(
                 new StringBuilder()
                         .append(menu.toString())
                         .append("List of all items: ")
@@ -89,8 +80,8 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("test name", "desc"));
         Input input = new StubInput(Arrays.asList("4", item.getId(), "6"));
-        new StartUI(input, tracker).init();
-        assertThat(new String(out.toByteArray()), is(
+        new StartUI(input, tracker, output).init();
+        assertThat(this.output.toString(), is(
                 new StringBuilder()
                         .append(menu.toString())
                         .append("-----------------Find item by Id-----------------")
@@ -115,7 +106,7 @@ public class StartUITest {
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
         Tracker tracker = new Tracker();
         Input input = new StubInput(Arrays.asList("0", "test name", "desc", "6"));
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findAll().get(0).getName(), is("test name"));
     }
 
@@ -124,7 +115,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("test name", "desc"));
         Input input = new StubInput(Arrays.asList("2", item.getId(), "test replace", "заменили заявку", "6"));
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findById(item.getId()).getName(), is("test replace"));
     }
 
@@ -133,7 +124,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("test name", "desc"));
         Input input = new StubInput(Arrays.asList("3", item.getId(), "6"));
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertFalse(Arrays.asList(tracker.findAll()).contains(item));
     }
 
@@ -142,7 +133,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("test name", "desc"));
         Input input = new StubInput(Arrays.asList("4", item.getId(), "6"));
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findById(item.getId()), is(item));
     }
 
@@ -152,7 +143,7 @@ public class StartUITest {
         Item item = tracker.add(new Item("test name", "desc"));
         List<Item> items = Arrays.asList(item);
         Input input = new StubInput(Arrays.asList("5", item.getName(), "6"));
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findByName(item.getName()), is(items));
     }
 }
