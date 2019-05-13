@@ -21,7 +21,7 @@ public class ConvertList2Array {
      * @param rows - Параметр указывает сколько подмассивов должно быть в результирующем массиве.
      * @return Двумерный массив из элементов исходной коллекции.
      */
-    public int[][] toArray(ArrayList<Integer> list, int rows) {
+    public int[][] toArray(List<Integer> list, int rows) {
         int arraySize = list.size();
         int cells = arraySize / rows;
         if (arraySize % rows != 0) {
